@@ -12,11 +12,6 @@ namespace MyMachineLearningLibrary
 		public List<ILayer> Layers { get; set; }
 		public double LearningRate { get; set; }
 		public int NumberOfInputs { get; set; }
-		
-		public NeuralNetwork()
-		{
-			Layers = new List<ILayer>();
-		}
 
 		public NeuralNetwork(int NumberOfInputs, double LearningRate) 
 		{
@@ -75,13 +70,10 @@ namespace MyMachineLearningLibrary
 					var currentErrors = new NeuralNetMatrix(targetsArray);
 					currentErrors.Subtract(outputMatrix);
 
-					// Backpropagate the rrors
+					// Backpropagate the errors
 					for (int j = Layers.Count - 1; j > 0; j--)
 					{
-						var layer = (ILayer)Layers[j];
-						var weights = layer.Weights;
-						var biases = layer.Biases;
-						var layerOutputs = layer.LayerOutputs;
+						var layer = Layers[j];
 						var previousLayerOutputs = Layers[j - 1].LayerOutputs;
 
 						//Calculate the output gradients
@@ -103,7 +95,7 @@ namespace MyMachineLearningLibrary
 						}
 
 						// Calculate Error
-						var weightsTransposed = NeuralNetMatrix.Transpose(weights);
+						var weightsTransposed = NeuralNetMatrix.Transpose(layer.Weights);
 						currentErrors = NeuralNetMatrix.DotProduct(weightsTransposed, currentErrors);
 					}
 				}
@@ -112,19 +104,12 @@ namespace MyMachineLearningLibrary
 
 		public void Save(string filePath)
 		{
-			//var json = JsonSerializer.Serialize(Layers);
-			//File.WriteAllText(filePath, json);
 			var json = JsonSerializer.Serialize(this);
 			File.WriteAllText(filePath, json);
 		}
 
 		public static NeuralNetwork Load(string filePath) 
 		{
-			//var json = File.ReadAllText(filePath);
-			//var layers = JsonSerializer.Deserialize<List<ILayer>>(json);
-			//var neuralNetwork = new NeuralNetwork();
-			//neuralNetwork.Layers = layers;
-			//return neuralNetwork;
 			var json = File.ReadAllText(filePath);
 			return JsonSerializer.Deserialize<NeuralNetwork>(json);
 		}
