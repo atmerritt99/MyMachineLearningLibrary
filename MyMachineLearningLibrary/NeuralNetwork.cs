@@ -112,17 +112,21 @@ namespace MyMachineLearningLibrary
 
 		public void Save(string filePath)
 		{
-			var json = JsonSerializer.Serialize(Layers);
+			//var json = JsonSerializer.Serialize(Layers);
+			//File.WriteAllText(filePath, json);
+			var json = JsonSerializer.Serialize(this);
 			File.WriteAllText(filePath, json);
 		}
 
 		public static NeuralNetwork Load(string filePath) 
 		{
+			//var json = File.ReadAllText(filePath);
+			//var layers = JsonSerializer.Deserialize<List<ILayer>>(json);
+			//var neuralNetwork = new NeuralNetwork();
+			//neuralNetwork.Layers = layers;
+			//return neuralNetwork;
 			var json = File.ReadAllText(filePath);
-			var layers = JsonSerializer.Deserialize<List<ILayer>>(json);
-			var neuralNetwork = new NeuralNetwork();
-			neuralNetwork.Layers = layers;
-			return neuralNetwork;
+			return JsonSerializer.Deserialize<NeuralNetwork>(json);
 		}
 
 		private int[] Shuffle(int max)

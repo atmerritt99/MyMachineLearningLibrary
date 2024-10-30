@@ -14,7 +14,7 @@ using MyMachineLearningLibrary;
 //nn.AddLayer(new DenseLayer(4, new ReluActivationFunction(.001)));
 //nn.AddLayer(new DenseLayer(1, new ReluActivationFunction(.001)));
 
-var nn = NeuralNetwork.Load("test.json");
+var nn = NeuralNetwork.Load("test2.json");
 
 // XOR Problem for testing
 var x = new double[][]
@@ -40,4 +40,12 @@ foreach (var input in x)
 	Console.WriteLine(nn.Predict(input)[0]);
 }
 
-//nn.Save("test.json");
+//nn.Save("test2.json");
+
+//nn = NeuralNetwork.Load("test2.json");
+
+//Console.WriteLine();
+//foreach (var input in x)
+//{
+//	Console.WriteLine(nn.Predict(input)[0]);
+//}
