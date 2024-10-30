@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "NN8faK3Xngs=",
+  "success": true,
+  "projectFilePath": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\austi\\.nuget\\packages\\interfaceconverter.systemtextjson\\1.3.2\\interfaceconverter.systemtextjson.1.3.2.nupkg.sha512"
+  ],
+  "logs": []
+}
