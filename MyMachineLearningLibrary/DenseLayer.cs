@@ -54,8 +54,8 @@ namespace MyMachineLearningLibrary
 			Gradients.ScalarDivide(batchSize);
 
 			//Calculate the output deltas
-			var lastHiddenLayerTransposition = NeuralNetMatrix.Transpose(previousLayer);
-			var outputDeltas = NeuralNetMatrix.DotProduct(Gradients, lastHiddenLayerTransposition);
+			var previousLayerTransposition = previousLayer.Transpose();
+			var outputDeltas = NeuralNetMatrix.DotProduct(Gradients, previousLayerTransposition);
 
 			//Update the Weights and Biases
 			Weights.Add(outputDeltas);

@@ -28,7 +28,7 @@ namespace MyMachineLearningLibrary
 			{
 				for (int j = 0; j < m.ColoumnLength; j++)
 				{
-					result[i, j] = (double)(1.0 / (1.0 + Math.Exp(-m[i, j])));
+					result[i, j] = 1.0 / (1.0 + Math.Exp(-m[i, j]));
 				}
 			}
 			return result;

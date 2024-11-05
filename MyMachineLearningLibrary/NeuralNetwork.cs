@@ -12,26 +12,20 @@ namespace MyMachineLearningLibrary
 		public List<ILayer> Layers { get; set; }
 		public double LearningRate { get; set; }
 		public int NumberOfInputs { get; set; }
+		public ILossFunction LossFunction { get; set; }
 
-		public NeuralNetwork(int NumberOfInputs, double LearningRate) 
+		public NeuralNetwork(int NumberOfInputs, double LearningRate, ILossFunction LossFunction) 
 		{
-			Layers = [];
+			Layers = [new InputLayer(NumberOfInputs)];
 			this.LearningRate = LearningRate;
 			this.NumberOfInputs = NumberOfInputs;
+			this.LossFunction = LossFunction;
 		}
 
 		public void AddLayer(ILayer layer)
 		{
-			if (Layers.Count == 0)
-			{
-				layer.InitializeLayer(NumberOfInputs, new NeuralNetMatrix(NumberOfInputs, 1));
-			}
-			else
-			{
-				var previousLayer = Layers.Last();
-				layer.InitializeLayer(previousLayer.NumberOfPerceptrons, previousLayer.Gradients);
-			}
-			
+			var previousLayer = Layers.Last();
+			layer.InitializeLayer(previousLayer.NumberOfPerceptrons, previousLayer.Gradients);
 			Layers.Add(layer);
 		}
 
@@ -39,22 +33,23 @@ namespace MyMachineLearningLibrary
 		{
 			var result = new NeuralNetMatrix(inputsArray);
 
-			for (int i = 0; i < Layers.Count; i++)
+			foreach(var layer in Layers)
 			{
-				var layer = Layers[i];
 				result = layer.FeedForward(result);
 			}
 
 			return result.Flatten();
 		}
 
-		public void Train(int numberOfEpochs, double[][] trainInputsArray, double[][] trainTargetsArray, int batchSize = 1 /*Stochastic Gradient Descent by default*/)
+		public void Train(int numberOfEpochs, double[][] trainInputsArray, double[][] trainTargetsArray, int batchSize = 1 /*Stochastic Gradient Descent by default*/, bool verbose = false)
 		{
 			for (int currentEpoch = 1; currentEpoch <= numberOfEpochs; currentEpoch++)
 			{
 				int batchCount = 0;
 
 				var shuffledIndexes = Shuffle(trainInputsArray.Length);
+
+				double cost = 0; // The cost is the average of all the loss
 
 				for (int i = 0; i < trainInputsArray.Length; i++)
 				{
@@ -64,11 +59,12 @@ namespace MyMachineLearningLibrary
 					var targetsArray = trainTargetsArray[k];
 
 					Predict(inputsArray);
-					var outputMatrix = Layers.Last().LayerOutputs;
+					var outputsMatrix = Layers.Last().LayerOutputs;
 
-					// Calculate the output errors
-					var currentErrors = new NeuralNetMatrix(targetsArray);
-					currentErrors.Subtract(outputMatrix);
+					// Calculate the errors
+					var targetsMatrix = new NeuralNetMatrix(targetsArray);
+					var currentErrors = LossFunction.CalculateLoss(targetsMatrix, outputsMatrix, out double loss);
+					cost += loss;
 
 					// Backpropagate the errors
 					for (int j = Layers.Count - 1; j > 0; j--)
@@ -94,11 +90,16 @@ namespace MyMachineLearningLibrary
 							}
 						}
 
-						// Calculate Error
-						var weightsTransposed = NeuralNetMatrix.Transpose(layer.Weights);
+						// Calculate this layer's Errors
+						var weightsTransposed = layer.Weights.Transpose();
 						currentErrors = NeuralNetMatrix.DotProduct(weightsTransposed, currentErrors);
 					}
 				}
+
+				cost /= trainInputsArray.Length;
+
+				if (verbose)
+					Console.WriteLine($"EPOCH: {currentEpoch}\tCOST: {cost}");
 			}
 		}
 
