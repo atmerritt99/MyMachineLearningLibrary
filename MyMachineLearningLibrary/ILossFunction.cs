@@ -10,6 +10,6 @@ namespace MyMachineLearningLibrary
 	[JsonInterfaceConverter(typeof(InterfaceConverter<ILossFunction>))]
 	public interface ILossFunction
 	{
-		public NeuralNetMatrix CalculateLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs, out double averageLoss);
+		public double CalculateLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs, out NeuralNetMatrix lossMatrix, out NeuralNetMatrix errorsDirections);
 	}
 }

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace MyMachineLearningLibrary
 {
-	public class MeanSquaredErrorLossFunction : ILossFunction
+	public class MeanAbsoluteErrorLossFunction : ILossFunction
 	{
 		public double CalculateLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs, out NeuralNetMatrix lossMatrix, out NeuralNetMatrix errorsDirections)
 		{
 			lossMatrix = NeuralNetMatrix.Subtract(targets, outputs);
-			lossMatrix.Multiply(lossMatrix);
+			lossMatrix.ScalarAbs();
 
 			errorsDirections = NeuralNetMatrix.Compare(targets, outputs);
 

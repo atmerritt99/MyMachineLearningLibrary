@@ -227,6 +227,32 @@ namespace MyMachineLearningLibrary
 			return result;
 		}
 
+        /// <summary>
+        /// Compares two NeuralNetMatrices to see if one has larger values than the other
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns>A NeuralNetMatrix with 1 where a's value is bigger than b and -1 where b is bigger than a</returns>
+        public static NeuralNetMatrix Compare(NeuralNetMatrix a, NeuralNetMatrix b)
+        {
+			var result = new NeuralNetMatrix(a.RowLength, a.ColoumnLength);
+			for (int i = 0; i < result.RowLength; i++)
+			{
+				for (int j = 0; j < result.ColoumnLength; j++)
+				{
+                    if (a[i, j] < b[i, j])
+                    {
+                        result[i, j] = -1;
+                    }
+                    else
+                    {
+						result[i, j] = 1;
+					}
+				}
+			}
+			return result;
+		}
+
 		public static NeuralNetMatrix DotProduct(NeuralNetMatrix a, NeuralNetMatrix b)
         {
             if (a.ColoumnLength != b.RowLength)

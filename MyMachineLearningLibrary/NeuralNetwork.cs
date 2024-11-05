@@ -63,8 +63,10 @@ namespace MyMachineLearningLibrary
 
 					// Calculate the errors
 					var targetsMatrix = new NeuralNetMatrix(targetsArray);
-					var currentErrors = LossFunction.CalculateLoss(targetsMatrix, outputsMatrix, out double loss);
+					double loss = LossFunction.CalculateLoss(targetsMatrix, outputsMatrix, out NeuralNetMatrix currentErrors, out NeuralNetMatrix errorsDirections);
 					cost += loss;
+
+					currentErrors.Multiply(errorsDirections);
 
 					// Backpropagate the errors
 					for (int j = Layers.Count - 1; j > 0; j--)
