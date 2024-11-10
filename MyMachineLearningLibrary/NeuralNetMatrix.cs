@@ -148,6 +148,16 @@ namespace MyMachineLearningLibrary
                 }
             }
         }
+		public void Divide(NeuralNetMatrix m)
+		{
+			for (int i = 0; i < RowLength; i++)
+			{
+				for (int j = 0; j < ColoumnLength; j++)
+				{
+					Values[i][j] /= m[i, j];
+				}
+			}
+		}
 
 		public static NeuralNetMatrix Multiply(NeuralNetMatrix a, NeuralNetMatrix b)
 		{
@@ -232,7 +242,7 @@ namespace MyMachineLearningLibrary
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
-        /// <returns>A NeuralNetMatrix with 1 where a's value is bigger than b and -1 where b is bigger than a</returns>
+        /// <returns>A NeuralNetMatrix with 1 where a's value is bigger than b, -1 where b is bigger than a, and 0 where they are the same</returns>
         public static NeuralNetMatrix Compare(NeuralNetMatrix a, NeuralNetMatrix b)
         {
 			var result = new NeuralNetMatrix(a.RowLength, a.ColoumnLength);
@@ -244,9 +254,13 @@ namespace MyMachineLearningLibrary
                     {
                         result[i, j] = -1;
                     }
+                    else if (a[i, j] > b[i, j])
+					{
+						result[i, j] = 1;
+					}
                     else
                     {
-						result[i, j] = 1;
+						result[i, j] = 0;
 					}
 				}
 			}

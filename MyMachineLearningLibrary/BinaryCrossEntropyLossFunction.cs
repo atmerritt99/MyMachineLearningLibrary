@@ -8,9 +8,18 @@ namespace MyMachineLearningLibrary
 {
 	public class BinaryCrossEntropyLossFunction : ILossFunction
 	{
-		public double CalculateLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs, out NeuralNetMatrix lossMatrix, out NeuralNetMatrix errorsDirections)
+		public NeuralNetMatrix CalculateDerivativeOfLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs)
 		{
-			lossMatrix = targets.Copy();
+			var lossMatrix = NeuralNetMatrix.Subtract(targets, outputs);
+			var oneMinusOutputs = NeuralNetMatrix.ScalarSubtract(1, outputs);
+			var x = NeuralNetMatrix.Multiply(outputs, oneMinusOutputs);
+			lossMatrix.Divide(x);
+			return lossMatrix;
+		}
+
+		public double CalculateLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs)
+		{
+			var lossMatrix = targets.Copy();
 			var logOutputs = NeuralNetMatrix.NaturalLog(outputs);
 			lossMatrix.Multiply(logOutputs);
 
@@ -22,8 +31,6 @@ namespace MyMachineLearningLibrary
 			lossMatrix.Add(y);
 
 			lossMatrix.ScalarMultiply(-1);
-
-			errorsDirections = NeuralNetMatrix.Compare(targets, outputs);
 
 			return lossMatrix.Average;
 		}

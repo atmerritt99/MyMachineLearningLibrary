@@ -8,14 +8,20 @@ namespace MyMachineLearningLibrary
 {
 	public class MeanSquaredErrorLossFunction : ILossFunction
 	{
-		public double CalculateLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs, out NeuralNetMatrix lossMatrix, out NeuralNetMatrix errorsDirections)
+		public double CalculateLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs)
 		{
-			lossMatrix = NeuralNetMatrix.Subtract(targets, outputs);
+			var lossMatrix = NeuralNetMatrix.Subtract(targets, outputs);
 			lossMatrix.Multiply(lossMatrix);
 
-			errorsDirections = NeuralNetMatrix.Compare(targets, outputs);
-
 			return lossMatrix.Average;
+		}
+
+		public NeuralNetMatrix CalculateDerivativeOfLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs)
+		{
+			var derivativeOfLossMatrix = NeuralNetMatrix.Subtract(targets, outputs);
+			derivativeOfLossMatrix.ScalarMultiply(2);
+			derivativeOfLossMatrix.ScalarDivide(targets.RowLength);
+			return derivativeOfLossMatrix;
 		}
 	}
 }

@@ -8,12 +8,15 @@ namespace MyMachineLearningLibrary
 {
 	public class MeanAbsoluteErrorLossFunction : ILossFunction
 	{
-		public double CalculateLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs, out NeuralNetMatrix lossMatrix, out NeuralNetMatrix errorsDirections)
+		public NeuralNetMatrix CalculateDerivativeOfLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs)
 		{
-			lossMatrix = NeuralNetMatrix.Subtract(targets, outputs);
-			lossMatrix.ScalarAbs();
+			return NeuralNetMatrix.Compare(targets, outputs);
+		}
 
-			errorsDirections = NeuralNetMatrix.Compare(targets, outputs);
+		public double CalculateLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs)
+		{
+			var lossMatrix = NeuralNetMatrix.Subtract(targets, outputs);
+			lossMatrix.ScalarAbs();
 
 			return lossMatrix.Average;
 		}

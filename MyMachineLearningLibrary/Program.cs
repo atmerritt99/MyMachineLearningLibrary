@@ -11,11 +11,11 @@ using MyMachineLearningLibrary;
  */
 
 
-//var nn = new NeuralNetwork(2, .1, new BinaryCrossEntropyLossFunction());
-//nn.AddLayer(new DenseLayer(4, new SigmoidActivationFunction()));
-//nn.AddLayer(new DenseLayer(1, new SigmoidActivationFunction()));
+var nn = new NeuralNetwork(2, .1, new BinaryCrossEntropyLossFunction());
+nn.AddLayer(new DenseLayer(4, new SigmoidActivationFunction()));
+nn.AddLayer(new DenseLayer(1, new SigmoidActivationFunction()));
 
-var nn = NeuralNetwork.Load("test.json");
+//var nn = NeuralNetwork.Load("test.json");
 
 // XOR Problem for testing
 var x = new double[][]
@@ -34,7 +34,7 @@ var y = new double[][]
 	[0],
 };
 
-//nn.Train(100000, x, y, 1, true);
+nn.Train(100000, x, y, 1, true);
 
 foreach (var input in x)
 {
