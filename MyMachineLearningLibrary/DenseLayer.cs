@@ -57,9 +57,9 @@ namespace MyMachineLearningLibrary
 			var previousLayerTransposition = previousLayer.Transpose();
 			var outputDeltas = NeuralNetMatrix.DotProduct(Gradients, previousLayerTransposition);
 
-			//Update the Weights and Biases
-			Weights.Add(outputDeltas);
-			Biases.Add(Gradients);
+			//Update the Weights and Biases With Gradient Descent Optimization
+			Weights.Subtract(outputDeltas);
+			Biases.Subtract(Gradients);
 
 			Gradients = new NeuralNetMatrix(Gradients.RowLength, Gradients.ColoumnLength);
 		}

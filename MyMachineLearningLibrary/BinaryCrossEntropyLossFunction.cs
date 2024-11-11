@@ -10,7 +10,7 @@ namespace MyMachineLearningLibrary
 	{
 		public NeuralNetMatrix CalculateDerivativeOfLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs)
 		{
-			var lossMatrix = NeuralNetMatrix.Subtract(targets, outputs);
+			var lossMatrix = NeuralNetMatrix.Subtract(outputs, targets);
 			var oneMinusOutputs = NeuralNetMatrix.ScalarSubtract(1, outputs);
 			var x = NeuralNetMatrix.Multiply(outputs, oneMinusOutputs);
 			lossMatrix.Divide(x);

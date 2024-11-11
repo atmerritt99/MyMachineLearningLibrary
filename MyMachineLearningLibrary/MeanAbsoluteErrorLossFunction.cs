@@ -10,7 +10,7 @@ namespace MyMachineLearningLibrary
 	{
 		public NeuralNetMatrix CalculateDerivativeOfLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs)
 		{
-			return NeuralNetMatrix.Compare(targets, outputs);
+			return NeuralNetMatrix.Compare(outputs, targets);
 		}
 
 		public double CalculateLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs)
