@@ -14,6 +14,12 @@ namespace MyMachineLearningLibrary
 		public int NumberOfInputs { get; set; }
 		public ILossFunction LossFunction { get; set; }
 
+		private NeuralNetwork()
+		{
+			Layers = new List<ILayer>();
+			LossFunction = new NotDefinedLossFunction();
+		}
+
 		public NeuralNetwork(int NumberOfInputs, double LearningRate, ILossFunction LossFunction) 
 		{
 			Layers = [new InputLayer(NumberOfInputs)];
@@ -39,6 +45,26 @@ namespace MyMachineLearningLibrary
 			}
 
 			return result.Flatten();
+		}
+
+		public int[] Classify(double[] inputsArray)
+		{
+			var predictions = Predict(inputsArray);
+			var result = new int[predictions.Length];
+
+			if (predictions.Length == 1)
+			{
+				var prediction = predictions[0];
+
+				result[0] = prediction >= .5 ? 1 : 0;
+
+				return result;
+			}
+
+			int indexOfMaxValue = predictions.ToList().IndexOf(predictions.Max());
+			result[indexOfMaxValue] = 1;
+
+			return result;
 		}
 
 		public void Train(int numberOfEpochs, double[][] trainInputsArray, double[][] trainTargetsArray, int batchSize = 1 /*Stochastic Gradient Descent by default*/, bool verbose = false)
@@ -103,6 +129,29 @@ namespace MyMachineLearningLibrary
 			}
 		}
 
+		public double Test(double[][] testInputsArray, double[][] testTargetsArray)
+		{
+			var classifications = new int[testInputsArray.Length][];
+			for(int i = 0; i < testInputsArray.Length; i++)
+			{
+				classifications[i] = Classify(testInputsArray[i]);
+			}
+
+			double accuracy = 1;
+			for (int i = 0; i < classifications.Length; i++)
+			{
+				int predictedClass = classifications[i].ToList().IndexOf(1);
+				int actualClass = testTargetsArray[i].ToList().IndexOf(1);
+
+				if (predictedClass != actualClass)
+				{
+					accuracy -= (1.0 / testInputsArray.Length);
+				}
+			}
+
+			return accuracy;
+		}
+
 		public void Save(string filePath)
 		{
 			var json = JsonSerializer.Serialize(this);
@@ -112,7 +161,7 @@ namespace MyMachineLearningLibrary
 		public static NeuralNetwork Load(string filePath) 
 		{
 			var json = File.ReadAllText(filePath);
-			return JsonSerializer.Deserialize<NeuralNetwork>(json);
+			return JsonSerializer.Deserialize<NeuralNetwork>(json) ?? new NeuralNetwork();
 		}
 
 		private int[] Shuffle(int max)
