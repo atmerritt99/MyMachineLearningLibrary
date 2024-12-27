@@ -7,6 +7,11 @@
 	Add Softmax Activation and Categorical Cross Entropy Loss Function
  */
 
+/*
+ Create a ficticious dataset by randomly generating 10 numbers then classifying those numbers with a 0 if the sum would be less than .5 or 1 otherwise
+ Split the dataset into a tarining and test set
+ */
+
 const int SIZE_OF_DATA_SET = 1000;
 const int SIZE_OF_TRAINING_DATA = (int)(SIZE_OF_DATA_SET * .8);
 const int SIZE_OF_TESTING_DATA = SIZE_OF_DATA_SET - SIZE_OF_TRAINING_DATA;

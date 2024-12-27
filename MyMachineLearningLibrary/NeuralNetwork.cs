@@ -35,6 +35,11 @@ namespace MyMachineLearningLibrary
 			Layers.Add(layer);
 		}
 
+		/// <summary>
+		/// Feeds the input array through the neural network
+		/// </summary>
+		/// <param name="inputsArray"></param>
+		/// <returns>The output of the neural network</returns>
 		public double[] Predict(double[] inputsArray)
 		{
 			var result = new NeuralNetMatrix(inputsArray);
@@ -47,6 +52,11 @@ namespace MyMachineLearningLibrary
 			return result.Flatten();
 		}
 
+		/// <summary>
+		/// Given an input to the neural network, return the predicted class
+		/// </summary>
+		/// <param name="inputsArray"></param>
+		/// <returns>If the output layer has only 1 perceptron, return an int array size 1 with either a 1 or a 0. Otherwise, return an int array with a 1 marking the predicted class, and a 0 marking the other classes</returns>
 		public int[] Classify(double[] inputsArray)
 		{
 			var predictions = Predict(inputsArray);
@@ -73,13 +83,12 @@ namespace MyMachineLearningLibrary
 			{
 				int batchCount = 0;
 
-				var shuffledIndexes = Shuffle(trainInputsArray.Length);
+				var shuffledIndexes = Shuffle(trainInputsArray.Length); //Shuffle the indexes so that the inputs are given in a random order
 
 				double cost = 0; // The cost is the average of all the loss
 
 				for (int i = 0; i < trainInputsArray.Length; i++)
 				{
-					//Shuffle the indexes so that the inputs are given in a random order
 					int k = shuffledIndexes[i];
 					var inputsArray = trainInputsArray[k];
 					var targetsArray = trainTargetsArray[k];
@@ -129,6 +138,12 @@ namespace MyMachineLearningLibrary
 			}
 		}
 
+		/// <summary>
+		/// Tests the models ability to classify the data passed into this function
+		/// </summary>
+		/// <param name="testInputsArray"></param>
+		/// <param name="testTargetsArray"></param>
+		/// <returns>The accuracy of the model</returns>
 		public double Test(double[][] testInputsArray, double[][] testTargetsArray)
 		{
 			var classifications = new int[testInputsArray.Length][];
@@ -140,6 +155,7 @@ namespace MyMachineLearningLibrary
 			double accuracy = 1;
 			for (int i = 0; i < classifications.Length; i++)
 			{
+				// In the case that there is only 1 perceptron in the output layer, compare whether or not the predicted class is a 1 or not (-1)
 				int predictedClass = classifications[i].ToList().IndexOf(1);
 				int actualClass = testTargetsArray[i].ToList().IndexOf(1);
 
@@ -152,18 +168,33 @@ namespace MyMachineLearningLibrary
 			return accuracy;
 		}
 
+		/// <summary>
+		/// Serializes and saves the model to a JSON file
+		/// </summary>
+		/// <param name="filePath"></param>
 		public void Save(string filePath)
 		{
 			var json = JsonSerializer.Serialize(this);
 			File.WriteAllText(filePath, json);
 		}
 
+		/// <summary>
+		/// Deserializes and loads the model from a JSON file
+		/// </summary>
+		/// <param name="filePath"></param>
+		/// <returns>The deserialized model</returns>
 		public static NeuralNetwork Load(string filePath) 
 		{
 			var json = File.ReadAllText(filePath);
 			return JsonSerializer.Deserialize<NeuralNetwork>(json) ?? new NeuralNetwork();
 		}
 
+		/// <summary>
+		/// This function fills an int array of size n with the numbers 0 - (n - 1) in a random order.
+		/// This is used to feed the training inputs in a random order for better training outcomes
+		/// </summary>
+		/// <param name="max"></param>
+		/// <returns></returns>
 		private int[] Shuffle(int max)
 		{
 			int[] result = new int[max];
