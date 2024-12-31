@@ -159,6 +159,27 @@ namespace MyMachineLearningLibrary
 			}
 		}
 
+		public static NeuralNetMatrix ScalarMultiply(NeuralNetMatrix a, double x)
+		{
+            var result = new NeuralNetMatrix(a.RowLength, a.ColoumnLength);
+
+			for (int i = 0; i < a.RowLength; i++)
+			{
+				for (int j = 0; j < a.ColoumnLength; j++)
+				{
+					result[i, j] *= x;
+				}
+			}
+
+            return result;
+		}
+
+		/// <summary>
+		/// Performs an element wise multiplication of two matrices
+		/// </summary>
+		/// <param name="a"></param>
+		/// <param name="b"></param>
+		/// <returns></returns>
 		public static NeuralNetMatrix Multiply(NeuralNetMatrix a, NeuralNetMatrix b)
 		{
 			var result = new NeuralNetMatrix(a.RowLength, a.ColoumnLength);
@@ -237,13 +258,36 @@ namespace MyMachineLearningLibrary
 			return result;
 		}
 
-        /// <summary>
-        /// Compares two NeuralNetMatrices to see if one has larger values than the other
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns>A NeuralNetMatrix with 1 where a's value is bigger than b, -1 where b is bigger than a, and 0 where they are the same</returns>
-        public static NeuralNetMatrix Compare(NeuralNetMatrix a, NeuralNetMatrix b)
+		public static NeuralNetMatrix Exponent(NeuralNetMatrix a)
+		{
+			var result = new NeuralNetMatrix(a.RowLength, a.ColoumnLength);
+			for (int i = 0; i < result.RowLength; i++)
+			{
+				for (int j = 0; j < result.ColoumnLength; j++)
+				{
+					result[i, j] = Math.Exp(a[i, j]);
+				}
+			}
+			return result;
+		}
+
+        public double RowSum(int rowIndex)
+        {
+            return Values[rowIndex].Sum();
+        }
+
+		public double RowMax(int rowIndex)
+		{
+			return Values[rowIndex].Max();
+		}
+
+		/// <summary>
+		/// Compares two NeuralNetMatrices to see if one has larger values than the other
+		/// </summary>
+		/// <param name="a"></param>
+		/// <param name="b"></param>
+		/// <returns>A NeuralNetMatrix with 1 where a's value is bigger than b, -1 where b is bigger than a, and 0 where they are the same</returns>
+		public static NeuralNetMatrix Compare(NeuralNetMatrix a, NeuralNetMatrix b)
         {
 			var result = new NeuralNetMatrix(a.RowLength, a.ColoumnLength);
 			for (int i = 0; i < result.RowLength; i++)
@@ -317,6 +361,18 @@ namespace MyMachineLearningLibrary
                     result[counter] = Values[i][j];
                     counter++;
                 }
+            }
+
+            return result;
+        }
+
+        public NeuralNetMatrix Diagonal()
+        {
+            var result = new NeuralNetMatrix(RowLength, RowLength);
+
+            for(int i = 0; i < RowLength; i++)
+            {
+                result[i, i] = this[i, 0];
             }
 
             return result;
