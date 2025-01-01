@@ -40,10 +40,9 @@
               "RelativeDocumentMoniker": "MyMachineLearningLibrary\\NeuralNetMatrix.cs",
               "ToolTip": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\NeuralNetMatrix.cs",
               "RelativeToolTip": "MyMachineLearningLibrary\\NeuralNetMatrix.cs",
-              "ViewState": "AgIAAAABAAAAAAAAAADwvxYBAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAA4BAAAAAAAAAAAUwBYBAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-28T20:22:14.358Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-28T20:22:14.358Z"
             },
             {
               "$type": "Document",
@@ -55,8 +54,7 @@
               "RelativeToolTip": "MyMachineLearningLibrary\\SoftmaxActivationFunction.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAB4AAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-28T19:48:09.321Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-28T19:48:09.321Z"
             },
             {
               "$type": "Document",
@@ -68,8 +66,7 @@
               "RelativeToolTip": "MyMachineLearningLibrary\\NeuralNetwork.cs",
               "ViewState": "AgIAACsAAAAAAAAAAAAmwG0AAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-25T21:43:19.162Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-25T21:43:19.162Z"
             },
             {
               "$type": "Document",
@@ -81,8 +78,7 @@
               "RelativeToolTip": "MyMachineLearningLibrary\\DenseLayer.cs",
               "ViewState": "AgIAABsAAAAAAAAAAIAywC4AAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-08T02:29:54.085Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-08T02:29:54.085Z"
             },
             {
               "$type": "Document",
@@ -90,9 +86,9 @@
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Program.cs",
               "RelativeDocumentMoniker": "MyMachineLearningLibrary\\Program.cs",
-              "ToolTip": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Program.cs",
-              "RelativeToolTip": "MyMachineLearningLibrary\\Program.cs",
-              "ViewState": "AgIAAEIAAAAAAAAAAAAAAFAAAAAbAAAAAAAAAA==",
+              "ToolTip": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Program.cs*",
+              "RelativeToolTip": "MyMachineLearningLibrary\\Program.cs*",
+              "ViewState": "AgIAALUBAAAAAAAAAAAAANoBAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-08T02:28:35.387Z",
               "EditorCaption": ""
