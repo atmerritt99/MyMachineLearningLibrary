@@ -144,7 +144,7 @@ namespace MyMachineLearningLibrary
             {
                 for (int j = 0; j < ColoumnLength; j++)
                 {
-                    Values[i][j] *= m[i, j];
+					Values[i][j] *= m[i, j];
                 }
             }
         }
@@ -154,7 +154,7 @@ namespace MyMachineLearningLibrary
 			{
 				for (int j = 0; j < ColoumnLength; j++)
 				{
-					Values[i][j] /= m[i, j];
+                    Values[i][j] /= m[i, j];
 				}
 			}
 		}
