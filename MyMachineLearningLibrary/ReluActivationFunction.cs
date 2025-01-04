@@ -43,5 +43,15 @@ namespace MyMachineLearningLibrary
 			}
 			return result;
 		}
+
+		public double ActivateFunction(double x)
+		{
+			return Math.Max(Leak * x, x);
+		}
+
+		public double ActivateDerivativeOfFunction(double x)
+		{
+			return x >= 0 ? 1 : Leak;
+		}
 	}
 }

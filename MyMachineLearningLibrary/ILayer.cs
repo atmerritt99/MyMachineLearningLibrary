@@ -12,13 +12,12 @@ namespace MyMachineLearningLibrary
 	{
 		public IActivationFunction ActivationFunction { get; set; }
 		public NeuralNetMatrix Gradients { get; set; }
-		public NeuralNetMatrix Weights { get; set; }
-		public NeuralNetMatrix Biases { get; set; }
 		public NeuralNetMatrix LayerOutputs { get; set; }
 		public int NumberOfPerceptrons { get; set; }
 		public void InitializeLayer(int numberOfPerceptronsInPreviousLayer, NeuralNetMatrix previousLayersGradients);
 		public NeuralNetMatrix FeedForward(NeuralNetMatrix neuralNetMatrix);
 		public void CalculateGradients(NeuralNetMatrix errors, double learningRate);
 		public void ApplyGradients(NeuralNetMatrix previousLayer, int batchSize);
+		public NeuralNetMatrix TransposeWeights();
 	}
 }

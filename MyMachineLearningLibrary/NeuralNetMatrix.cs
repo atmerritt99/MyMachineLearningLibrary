@@ -385,7 +385,7 @@ namespace MyMachineLearningLibrary
             {
                 for (int j = 0; j < ColoumnLength; j++)
                 {
-                    Values[i][j] = (double)(rng.NextDouble() * 2) - 1;
+                    Values[i][j] = (rng.NextDouble() * 2) - 1;
                 }
             }
         }

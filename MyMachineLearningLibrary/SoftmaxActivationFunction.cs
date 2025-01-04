@@ -31,6 +31,11 @@ namespace MyMachineLearningLibrary
 			throw new NotImplementedException();
 		}
 
+		public double ActivateDerivativeOfFunction(double x)
+		{
+			throw new NotImplementedException();
+		}
+
 		public NeuralNetMatrix ActivateFunction(NeuralNetMatrix m)
 		{
 			var result = new NeuralNetMatrix(m.RowLength, m.ColoumnLength);
@@ -54,6 +59,11 @@ namespace MyMachineLearningLibrary
 			}
 
 			return result;
+		}
+
+		public double ActivateFunction(double x)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

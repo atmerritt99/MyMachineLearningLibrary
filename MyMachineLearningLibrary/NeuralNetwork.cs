@@ -126,7 +126,7 @@ namespace MyMachineLearningLibrary
 						}
 
 						// Calculate this layer's Errors
-						var weightsTransposed = layer.Weights.Transpose();
+						var weightsTransposed = layer.TransposeWeights();
 						currentErrors = NeuralNetMatrix.DotProduct(weightsTransposed, currentErrors);
 					}
 				}

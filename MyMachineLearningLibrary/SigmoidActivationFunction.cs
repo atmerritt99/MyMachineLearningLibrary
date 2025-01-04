@@ -21,6 +21,11 @@ namespace MyMachineLearningLibrary
 			return result;
 		}
 
+		public double ActivateDerivativeOfFunction(double x)
+		{
+			return x * (1 - x);
+		}
+
 		public NeuralNetMatrix ActivateFunction(NeuralNetMatrix m)
 		{
 			NeuralNetMatrix result = new NeuralNetMatrix(m.RowLength, m.ColoumnLength);
@@ -32,6 +37,11 @@ namespace MyMachineLearningLibrary
 				}
 			}
 			return result;
+		}
+
+		public double ActivateFunction(double x)
+		{
+			return 1.0 / (1.0 + Math.Exp(-x));
 		}
 	}
 }

@@ -23,6 +23,7 @@ namespace MyMachineLearningLibrary
 			this.NumberOfPerceptrons = NumberOfPerceptrons;
 			this.LayerOutputs = new NeuralNetMatrix(NumberOfPerceptrons, 1);
 			this.Gradients = new NeuralNetMatrix(NumberOfPerceptrons, 1);
+			ActivationFunction = new SigmoidActivationFunction();
 		}
 		
 		public void ApplyGradients(NeuralNetMatrix previousLayer, int batchSize)
@@ -42,6 +43,11 @@ namespace MyMachineLearningLibrary
 		}
 
 		public void InitializeLayer(int numberOfPerceptronsInPreviousLayer, NeuralNetMatrix previousLayersGradients)
+		{
+			throw new NotImplementedException();
+		}
+
+		public NeuralNetMatrix TransposeWeights()
 		{
 			throw new NotImplementedException();
 		}

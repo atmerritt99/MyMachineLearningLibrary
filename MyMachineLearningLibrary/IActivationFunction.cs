@@ -10,6 +10,8 @@ namespace MyMachineLearningLibrary
 	[JsonInterfaceConverter(typeof(InterfaceConverter<IActivationFunction>))]
 	public interface IActivationFunction
 	{
+		public double ActivateFunction(double x);
+		public double ActivateDerivativeOfFunction(double x);
 		public NeuralNetMatrix ActivateFunction(NeuralNetMatrix m);
 		// With the Derivative Assume the input as gone through the activation function
 		public NeuralNetMatrix ActivateDerivativeOfFunction(NeuralNetMatrix m);
