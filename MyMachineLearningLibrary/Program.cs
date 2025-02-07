@@ -93,10 +93,10 @@ var outputs = new double[4][]
 	[0],
 };
 
-var nn = new NeuralNetwork(2, .1, new MeanSquaredErrorLossFunction());
-nn.AddLayer(new DenseLayer(12, new HeavisideAcivationFunction()));
-nn.AddLayer(new DenseLayer(1, new  HeavisideAcivationFunction()));
+var nn = new NeuralNetwork(2, .1, new BinaryCrossEntropyLossFunction());
+nn.AddLayer(new DenseLayer(6, new SigmoidActivationFunction()));
+nn.AddLayer(new DenseLayer(1, new  SigmoidActivationFunction()));
 
-nn.Train(100, inputs, outputs, 1, true);
+nn.Train(1000, inputs, outputs, 1, true);
 
 Console.WriteLine(nn.Test(inputs, outputs));

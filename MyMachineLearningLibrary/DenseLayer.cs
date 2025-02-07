@@ -82,6 +82,38 @@ namespace MyMachineLearningLibrary
 			Gradients.Add(outputGradients);
 		}
 
+		public NeuralNetMatrix Backpropagate(NeuralNetMatrix errors, double learningRate, NeuralNetMatrix previousLayer)
+		{
+			var outputGradients = ActivationFunction.ActivateDerivativeOfFunction(LayerOutputs);
+			outputGradients.Multiply(errors);
+			outputGradients.ScalarMultiply(learningRate);
+			Gradients.Add(outputGradients);
+
+			//Calculate the output deltas
+			var previousLayerTransposition = previousLayer.Transpose();
+			var outputDeltas = NeuralNetMatrix.DotProduct(Gradients, previousLayerTransposition);
+
+			//Update the Weights and Biases With Gradient Descent Optimization
+			//Weights.Subtract(outputDeltas);
+			for (int i = 0; i < Perceptrons.Length; i++)
+			{
+				for (int j = 0; j < Perceptrons[i].Weights.Length; j++)
+				{
+					Perceptrons[i].Weights[j] -= outputDeltas[i, j];
+				}
+			}
+
+			//Biases.Subtract(Gradients);
+			for (int i = 0; i < Perceptrons.Length; i++)
+			{
+				Perceptrons[i].Bias -= Gradients[i, 0];
+			}
+
+			Gradients = new NeuralNetMatrix(Gradients.RowLength, Gradients.ColoumnLength);
+
+			return NeuralNetMatrix.DotProduct(TransposeWeights(), errors);
+		}
+
 		public NeuralNetMatrix FeedForward(NeuralNetMatrix layerInputs)
 		{
 			for(int i = 0; i < Perceptrons.Length; i++)

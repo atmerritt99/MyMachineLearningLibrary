@@ -104,30 +104,31 @@ namespace MyMachineLearningLibrary
 					// Backpropagate the errors
 					for (int j = Layers.Count - 1; j > 0; j--)
 					{
-						var layer = Layers[j];
-						var previousLayerOutputs = Layers[j - 1].LayerOutputs;
+						currentErrors = Layers[j].Backpropagate(currentErrors, LearningRate, Layers[j - 1].LayerOutputs);
+						//var layer = Layers[j];
+						//var previousLayerOutputs = Layers[j - 1].LayerOutputs;
 
-						//Calculate the output gradients
-						layer.CalculateGradients(currentErrors, LearningRate);
+						////Calculate the output gradients
+						//layer.CalculateGradients(currentErrors, LearningRate);
 
-						//Apply Gradients
-						if ((i + 1) % batchSize == 0 || (i + 1) == trainInputsArray.Length)
-						{
-							if ((i + 1) == trainInputsArray.Length)
-							{
-								int lengthFinalBatch = trainInputsArray.Length - (batchSize * batchCount);
-								layer.ApplyGradients(previousLayerOutputs, lengthFinalBatch);
-							}
-							else
-							{
-								batchCount++;
-								layer.ApplyGradients(previousLayerOutputs, batchSize);
-							}
-						}
+						////Apply Gradients
+						//if ((i + 1) % batchSize == 0 || (i + 1) == trainInputsArray.Length)
+						//{
+						//	if ((i + 1) == trainInputsArray.Length)
+						//	{
+						//		int lengthFinalBatch = trainInputsArray.Length - (batchSize * batchCount);
+						//		layer.ApplyGradients(previousLayerOutputs, lengthFinalBatch);
+						//	}
+						//	else
+						//	{
+						//		batchCount++;
+						//		layer.ApplyGradients(previousLayerOutputs, batchSize);
+						//	}
+						//}
 
-						// Calculate this layer's Errors
-						var weightsTransposed = layer.TransposeWeights();
-						currentErrors = NeuralNetMatrix.DotProduct(weightsTransposed, currentErrors);
+						//// Calculate this layer's Errors
+						//var weightsTransposed = layer.TransposeWeights();
+						//currentErrors = NeuralNetMatrix.DotProduct(weightsTransposed, currentErrors);
 					}
 				}
 
