@@ -52,6 +52,14 @@ namespace MyMachineLearningLibrary
             }
         }
 
+        public double Max
+        {
+            get
+            {
+                return Flatten().Max();
+            }
+        }
+
         public NeuralNetMatrix()
         {
             Values = [];
@@ -94,7 +102,7 @@ namespace MyMachineLearningLibrary
             }
         }
 
-        public void ScalarDivide(int x)
+        public void ScalarDivide(double x)
         {
             for (int i = 0; i < RowLength; i++)
             {
@@ -245,7 +253,7 @@ namespace MyMachineLearningLibrary
 			return result;
 		}
 
-		public static NeuralNetMatrix NaturalLog(NeuralNetMatrix a)
+		public static NeuralNetMatrix Log(NeuralNetMatrix a)
 		{
 			var result = new NeuralNetMatrix(a.RowLength, a.ColoumnLength);
 			for (int i = 0; i < result.RowLength; i++)
@@ -276,10 +284,10 @@ namespace MyMachineLearningLibrary
             return Values[rowIndex].Sum();
         }
 
-		public double RowMax(int rowIndex)
-		{
-			return Values[rowIndex].Max();
-		}
+		//public double RowMax(int rowIndex)
+		//{
+		//	return Values[rowIndex].Max();
+		//}
 
 		/// <summary>
 		/// Compares two NeuralNetMatrices to see if one has larger values than the other

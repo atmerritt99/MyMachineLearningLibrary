@@ -20,12 +20,12 @@ namespace MyMachineLearningLibrary
 		public double CalculateLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs)
 		{
 			var lossMatrix = targets.Copy();
-			var logOutputs = NeuralNetMatrix.NaturalLog(outputs);
+			var logOutputs = NeuralNetMatrix.Log(outputs);
 			lossMatrix.Multiply(logOutputs);
 
 			var oneMinusTargets = NeuralNetMatrix.ScalarSubtract(1, targets);
 			var oneMinusOutputs = NeuralNetMatrix.ScalarSubtract(1, outputs);
-			var logOneMinusOutputs = NeuralNetMatrix.NaturalLog(oneMinusOutputs);
+			var logOneMinusOutputs = NeuralNetMatrix.Log(oneMinusOutputs);
 			var y = NeuralNetMatrix.Multiply(oneMinusTargets, logOneMinusOutputs);
 
 			lossMatrix.Add(y);

@@ -87,15 +87,15 @@ var inputs = new double[4][]
 
 var outputs = new double[4][]
 {
-	[0],
-	[1],
-	[1],
-	[0],
+	[1, 0],
+	[0, 1],
+	[0, 1],
+	[1, 0],
 };
 
-var nn = new NeuralNetwork(2, .1, new BinaryCrossEntropyLossFunction());
-nn.AddLayer(new DenseLayer(6, new SigmoidActivationFunction()));
-nn.AddLayer(new DenseLayer(1, new  SigmoidActivationFunction()));
+var nn = new NeuralNetwork(2, .05, new CategoricalCrossEntropyLossFunction());
+nn.AddLayer(new DenseLayer(6, new ReluActivationFunction(.01)));
+nn.AddLayer(new DenseLayer(2, new  SoftmaxActivationFunction()));
 
 nn.Train(1000, inputs, outputs, 1, true);
 

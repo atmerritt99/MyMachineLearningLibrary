@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="CategoricalCrossEntropyLossFunction.cs~RF2d98c7cf.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="InterfaceConverter.SystemTextJson" Version="1.3.2" />
   </ItemGroup>
 

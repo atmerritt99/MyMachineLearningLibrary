@@ -10,24 +10,6 @@ namespace MyMachineLearningLibrary
 	{
 		public NeuralNetMatrix ActivateDerivativeOfFunction(NeuralNetMatrix m)
 		{
-			//var result = m.Diagonal();
-
-			//for (int i = 0; i < m.ColoumnLength; i++)
-			//{
-			//	for (int j = 0; j < m.ColoumnLength; j++)
-			//	{
-			//		if(i == j)
-			//		{
-			//			result[i, j] = -m[0, i] * m[0, j];
-			//			continue;
-			//		}
-
-			//		result[i, j] = m[0, i] * (1 - m[0, i]);
-			//	}
-			//}
-
-			//return result;
-
 			throw new NotImplementedException();
 		}
 
@@ -38,26 +20,9 @@ namespace MyMachineLearningLibrary
 
 		public NeuralNetMatrix ActivateFunction(NeuralNetMatrix m)
 		{
-			var result = new NeuralNetMatrix(m.RowLength, m.ColoumnLength);
-
-			for (int i = 0; i < m.RowLength; i++)
-			{
-				for (int j = 0; j < m.ColoumnLength; j++)
-				{
-					result[i, j] = m[i, j] - m.RowMax(i);
-				}
-			}
-
+			var result = NeuralNetMatrix.ScalarSubtract(m, m.Max);
 			result = NeuralNetMatrix.Exponent(result);
-
-			for (int i = 0; i < m.RowLength; i++)
-			{
-				for(int j = 0; j < m.ColoumnLength; j++)
-				{
-					result[i, j] = result[i, j] / result.RowSum(i);
-				}
-			}
-
+			result.ScalarDivide(result.Sum);
 			return result;
 		}
 

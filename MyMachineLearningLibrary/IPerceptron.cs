@@ -14,5 +14,6 @@ namespace MyMachineLearningLibrary
 		public double[] Weights { get; set; }
 		public double Bias { get; set; }
 		public double Activate(double[] inputs);
+		public double WeightedSum(double[] inputs);
 	}
 }

@@ -38,6 +38,18 @@ namespace MyMachineLearningLibrary
 			this.ActivationFunction = ActivationFunction;
 		}
 
+		public double WeightedSum(double[] inputs)
+		{
+			Output = Bias;
+
+			for (int i = 0; i < inputs.Length; i++)
+			{
+				Output += inputs[i] * Weights[i];
+			}
+
+			return Output;
+		}
+
 		public double Activate(double[] inputs)
 		{
 			Output = Bias;

@@ -30,6 +30,11 @@ namespace MyMachineLearningLibrary
 
 		public void AddLayer(ILayer layer)
 		{
+			if(layer.ActivationFunction.GetType() == typeof(SoftmaxActivationFunction) && LossFunction.GetType() != typeof(CategoricalCrossEntropyLossFunction))
+			{
+				throw new Exception("Softmax Activation can only be used with Categorical Cross Entropy in this Library");
+			}
+
 			var previousLayer = Layers.Last();
 			layer.InitializeLayer(previousLayer.NumberOfPerceptrons, previousLayer.Gradients);
 			Layers.Add(layer);

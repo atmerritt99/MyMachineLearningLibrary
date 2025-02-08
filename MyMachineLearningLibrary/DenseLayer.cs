@@ -32,7 +32,7 @@ namespace MyMachineLearningLibrary
 		{
 			get
 			{
-				return new NeuralNetMatrix(Perceptrons.Select(x => x.Output).ToArray());
+				return ActivationFunction.ActivateFunction(new NeuralNetMatrix(Perceptrons.Select(x => x.Output).ToArray()));
 			}
 			set
 			{
@@ -84,7 +84,7 @@ namespace MyMachineLearningLibrary
 
 		public NeuralNetMatrix Backpropagate(NeuralNetMatrix errors, double learningRate, NeuralNetMatrix previousLayer)
 		{
-			var outputGradients = ActivationFunction.ActivateDerivativeOfFunction(LayerOutputs);
+			var outputGradients = typeof(SoftmaxActivationFunction) == ActivationFunction.GetType() ? LayerOutputs : ActivationFunction.ActivateDerivativeOfFunction(LayerOutputs);
 			outputGradients.Multiply(errors);
 			outputGradients.ScalarMultiply(learningRate);
 			Gradients.Add(outputGradients);
@@ -118,7 +118,7 @@ namespace MyMachineLearningLibrary
 		{
 			for(int i = 0; i < Perceptrons.Length; i++)
 			{
-				Perceptrons[i].Activate(layerInputs.Flatten());
+				Perceptrons[i].WeightedSum(layerInputs.Flatten());
 			}
 			return LayerOutputs;
 		}
