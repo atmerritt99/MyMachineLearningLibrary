@@ -92,6 +92,7 @@ namespace MyMachineLearningLibrary
 
 				double cost = 0; // The cost is the average of all the loss
 
+				var currentErrors = new NeuralNetMatrix(trainTargetsArray[0].Length, 1);
 				for (int i = 0; i < trainInputsArray.Length; i++)
 				{
 					int k = shuffledIndexes[i];
@@ -103,38 +104,21 @@ namespace MyMachineLearningLibrary
 
 					// Calculate the errors
 					var targetsMatrix = new NeuralNetMatrix(targetsArray);
-					var currentErrors = LossFunction.CalculateDerivativeOfLoss(targetsMatrix, outputsMatrix);
+					currentErrors.Add(LossFunction.CalculateDerivativeOfLoss(targetsMatrix, outputsMatrix));
 					cost += LossFunction.CalculateLoss(targetsMatrix, outputsMatrix);
+
+					// Finish the batch before preceeding
+					if (!((i + 1) % batchSize == 0 || (i + 1) == trainInputsArray.Length))
+						continue;
 
 					// Backpropagate the errors
 					for (int j = Layers.Count - 1; j > 0; j--)
 					{
-						currentErrors = Layers[j].Backpropagate(currentErrors, LearningRate, Layers[j - 1].LayerOutputs);
-						//var layer = Layers[j];
-						//var previousLayerOutputs = Layers[j - 1].LayerOutputs;
-
-						////Calculate the output gradients
-						//layer.CalculateGradients(currentErrors, LearningRate);
-
-						////Apply Gradients
-						//if ((i + 1) % batchSize == 0 || (i + 1) == trainInputsArray.Length)
-						//{
-						//	if ((i + 1) == trainInputsArray.Length)
-						//	{
-						//		int lengthFinalBatch = trainInputsArray.Length - (batchSize * batchCount);
-						//		layer.ApplyGradients(previousLayerOutputs, lengthFinalBatch);
-						//	}
-						//	else
-						//	{
-						//		batchCount++;
-						//		layer.ApplyGradients(previousLayerOutputs, batchSize);
-						//	}
-						//}
-
-						//// Calculate this layer's Errors
-						//var weightsTransposed = layer.TransposeWeights();
-						//currentErrors = NeuralNetMatrix.DotProduct(weightsTransposed, currentErrors);
+						var currentBatchLength = (i + 1) == trainInputsArray.Length ? trainInputsArray.Length - (batchSize * batchCount) : batchSize;
+						currentErrors = Layers[j].Backpropagate(currentErrors, LearningRate, Layers[j - 1].LayerOutputs, currentBatchLength);
 					}
+					batchCount++;
+					currentErrors = new NeuralNetMatrix(trainTargetsArray[0].Length, 1);
 				}
 
 				cost /= trainInputsArray.Length;

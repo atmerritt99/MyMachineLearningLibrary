@@ -82,12 +82,14 @@ namespace MyMachineLearningLibrary
 			Gradients.Add(outputGradients);
 		}
 
-		public NeuralNetMatrix Backpropagate(NeuralNetMatrix errors, double learningRate, NeuralNetMatrix previousLayer)
+		public NeuralNetMatrix Backpropagate(NeuralNetMatrix errors, double learningRate, NeuralNetMatrix previousLayer, int batchSize)
 		{
 			var outputGradients = typeof(SoftmaxActivationFunction) == ActivationFunction.GetType() ? LayerOutputs : ActivationFunction.ActivateDerivativeOfFunction(LayerOutputs);
 			outputGradients.Multiply(errors);
 			outputGradients.ScalarMultiply(learningRate);
 			Gradients.Add(outputGradients);
+
+			Gradients.ScalarDivide(batchSize);
 
 			//Calculate the output deltas
 			var previousLayerTransposition = previousLayer.Transpose();

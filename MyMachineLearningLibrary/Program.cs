@@ -87,16 +87,20 @@ var inputs = new double[4][]
 
 var outputs = new double[4][]
 {
-	[1, 0],
-	[0, 1],
-	[0, 1],
-	[1, 0],
+	[0],
+	[1],
+	[1],
+	[0],
 };
 
-var nn = new NeuralNetwork(2, .05, new CategoricalCrossEntropyLossFunction());
-nn.AddLayer(new DenseLayer(6, new ReluActivationFunction(.01)));
-nn.AddLayer(new DenseLayer(2, new  SoftmaxActivationFunction()));
+var nn = new NeuralNetwork(2, .1, new MeanSquaredErrorLossFunction());
+nn.AddLayer(new DenseLayer(6, new SigmoidActivationFunction()));
+nn.AddLayer(new DenseLayer(1, new SigmoidActivationFunction()));
 
-nn.Train(1000, inputs, outputs, 1, true);
+nn.Train(10000, inputs, outputs, 2, true);
 
-Console.WriteLine(nn.Test(inputs, outputs));
+nn.Save("test.json");
+
+var nn2 = NeuralNetwork.Load("test.json");
+
+Console.WriteLine(nn2.Test(inputs, outputs));

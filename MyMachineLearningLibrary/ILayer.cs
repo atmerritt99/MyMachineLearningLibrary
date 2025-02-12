@@ -19,6 +19,6 @@ namespace MyMachineLearningLibrary
 		public void CalculateGradients(NeuralNetMatrix errors, double learningRate);
 		public void ApplyGradients(NeuralNetMatrix previousLayer, int batchSize);
 		public NeuralNetMatrix TransposeWeights();
-		public NeuralNetMatrix Backpropagate(NeuralNetMatrix errors, double learningRate, NeuralNetMatrix previousLayer);
+		public NeuralNetMatrix Backpropagate(NeuralNetMatrix errors, double learningRate, NeuralNetMatrix previousLayer, int batchSize);
 	}
 }

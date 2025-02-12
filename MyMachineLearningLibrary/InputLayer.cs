@@ -52,7 +52,7 @@ namespace MyMachineLearningLibrary
 			throw new NotImplementedException();
 		}
 
-		public NeuralNetMatrix Backpropagate(NeuralNetMatrix errors, double learningRate, NeuralNetMatrix previousLayer)
+		public NeuralNetMatrix Backpropagate(NeuralNetMatrix errors, double learningRate, NeuralNetMatrix previousLayer, int batchSize)
 		{
 			throw new NotImplementedException();
 		}
