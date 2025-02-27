@@ -104,7 +104,7 @@ namespace MyMachineLearningLibrary
 
 					// Calculate the errors
 					var targetsMatrix = new NeuralNetMatrix(targetsArray);
-					currentErrors.Add(LossFunction.CalculateDerivativeOfLoss(targetsMatrix, outputsMatrix));
+					currentErrors = currentErrors.Add(LossFunction.CalculateDerivativeOfLoss(targetsMatrix, outputsMatrix));
 					cost += LossFunction.CalculateLoss(targetsMatrix, outputsMatrix);
 
 					// Finish the batch before preceeding

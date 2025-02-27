@@ -10,17 +10,17 @@ namespace MyMachineLearningLibrary
 	{
 		public double CalculateLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs)
 		{
-			var lossMatrix = NeuralNetMatrix.Subtract(targets, outputs);
-			lossMatrix.Multiply(lossMatrix);
+			var lossMatrix = targets.Subtract(outputs);
+			lossMatrix = lossMatrix.Multiply(lossMatrix);
 
 			return lossMatrix.Average;
 		}
 
 		public NeuralNetMatrix CalculateDerivativeOfLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs)
 		{
-			var derivativeOfLossMatrix = NeuralNetMatrix.Subtract(targets, outputs);
-			derivativeOfLossMatrix.ScalarMultiply(-2);
-			derivativeOfLossMatrix.ScalarDivide(targets.RowLength);
+			var derivativeOfLossMatrix = targets.Subtract(outputs);
+			derivativeOfLossMatrix = derivativeOfLossMatrix.Multiply(-2);
+			derivativeOfLossMatrix = derivativeOfLossMatrix.Divide(targets.RowLength);
 			return derivativeOfLossMatrix;
 		}
 	}

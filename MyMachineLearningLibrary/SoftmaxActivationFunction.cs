@@ -20,9 +20,9 @@ namespace MyMachineLearningLibrary
 
 		public NeuralNetMatrix ActivateFunction(NeuralNetMatrix m)
 		{
-			var result = NeuralNetMatrix.ScalarSubtract(m, m.Max);
-			result = NeuralNetMatrix.Exponent(result);
-			result.ScalarDivide(result.Sum);
+			var result = m.Subtract(m.Max);
+			result = result.Exponent();
+			result = result.Divide(result.Sum);
 			return result;
 		}
 

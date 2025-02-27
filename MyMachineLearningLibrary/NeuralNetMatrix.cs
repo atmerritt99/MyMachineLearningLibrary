@@ -91,130 +91,110 @@ namespace MyMachineLearningLibrary
             }
         }
 
-		public void ScalarMultiply(double x)
+		public NeuralNetMatrix Multiply(double x)
         {
+            var result = new NeuralNetMatrix(RowLength, ColoumnLength);
             for (int i = 0; i < RowLength; i++)
             {
                 for (int j = 0; j < ColoumnLength; j++)
                 {
-                    Values[i][j] *= x; 
+                    result[i, j] = Values[i][j] * x; 
                 }
             }
-        }
-
-        public void ScalarDivide(double x)
-        {
-            for (int i = 0; i < RowLength; i++)
-            {
-                for (int j = 0; j < ColoumnLength; j++)
-                {
-                    Values[i][j] /= x;
-                }
-            }
-        }
-
-        public void ScalarAbs()
-        {
-            for (int i = 0; i < RowLength; i++)
-            {
-                for (int j = 0; j < ColoumnLength; j++)
-                {
-                    Values[i][j] = Math.Abs(Values[i][j]);
-                }
-            }
-        }
-
-        public void Add(NeuralNetMatrix m)
-        {
-            for (int i = 0; i < RowLength; i++)
-            {
-                for (int j = 0; j < ColoumnLength; j++)
-                {
-                    Values[i][j] += m[i, j]; 
-                }
-            }
-        }
-
-		public void Subtract(NeuralNetMatrix m)
-		{
-			for (int i = 0; i < RowLength; i++)
-			{
-				for (int j = 0; j < ColoumnLength; j++)
-				{
-					Values[i][j] -= m[i, j];
-				}
-			}
-		}
-
-		public void Multiply(NeuralNetMatrix m)
-        {
-            for (int i = 0; i < RowLength; i++)
-            {
-                for (int j = 0; j < ColoumnLength; j++)
-                {
-					Values[i][j] *= m[i, j];
-                }
-            }
-        }
-		public void Divide(NeuralNetMatrix m)
-		{
-			for (int i = 0; i < RowLength; i++)
-			{
-				for (int j = 0; j < ColoumnLength; j++)
-				{
-                    Values[i][j] /= m[i, j];
-				}
-			}
-		}
-
-		public static NeuralNetMatrix ScalarMultiply(NeuralNetMatrix a, double x)
-		{
-            var result = new NeuralNetMatrix(a.RowLength, a.ColoumnLength);
-
-			for (int i = 0; i < a.RowLength; i++)
-			{
-				for (int j = 0; j < a.ColoumnLength; j++)
-				{
-					result[i, j] *= x;
-				}
-			}
-
             return result;
-		}
+        }
 
-		/// <summary>
-		/// Performs an element wise multiplication of two matrices
-		/// </summary>
-		/// <param name="a"></param>
-		/// <param name="b"></param>
-		/// <returns></returns>
-		public static NeuralNetMatrix Multiply(NeuralNetMatrix a, NeuralNetMatrix b)
-		{
-			var result = new NeuralNetMatrix(a.RowLength, a.ColoumnLength);
-			for (int i = 0; i < result.RowLength; i++)
+        public NeuralNetMatrix Divide(double x)
+        {
+			var result = new NeuralNetMatrix(RowLength, ColoumnLength);
+			for (int i = 0; i < RowLength; i++)
 			{
-				for (int j = 0; j < result.ColoumnLength; j++)
+				for (int j = 0; j < ColoumnLength; j++)
 				{
-					result[i, j] = a[i, j] * b[i, j];
+					result[i, j] = Values[i][j] / x;
 				}
 			}
 			return result;
 		}
 
-		public static NeuralNetMatrix ScalarSubtract(NeuralNetMatrix a, double b)
-		{
-			var result = new NeuralNetMatrix(a.RowLength, a.ColoumnLength);
-			for (int i = 0; i < result.RowLength; i++)
+        public NeuralNetMatrix AbsoluteValue()
+        {
+			var result = new NeuralNetMatrix(RowLength, ColoumnLength);
+			for (int i = 0; i < RowLength; i++)
 			{
-				for (int j = 0; j < result.ColoumnLength; j++)
+				for (int j = 0; j < ColoumnLength; j++)
 				{
-					result[i, j] = a[i, j] - b;
+					result[i, j] = Math.Abs(Values[i][j]);
 				}
 			}
 			return result;
 		}
 
-		public static NeuralNetMatrix ScalarSubtract(double a, NeuralNetMatrix b)
+        public NeuralNetMatrix Add(NeuralNetMatrix m)
+        {
+			var result = new NeuralNetMatrix(RowLength, ColoumnLength);
+			for (int i = 0; i < RowLength; i++)
+			{
+				for (int j = 0; j < ColoumnLength; j++)
+				{
+                    result[i, j] = Values[i][j] + m[i, j];
+				}
+			}
+			return result;
+		}
+
+		public NeuralNetMatrix Subtract(double m)
+		{
+			var result = new NeuralNetMatrix(RowLength, ColoumnLength);
+			for (int i = 0; i < RowLength; i++)
+			{
+				for (int j = 0; j < ColoumnLength; j++)
+				{
+					result[i, j] = Values[i][j] - m;
+				}
+			}
+			return result;
+		}
+
+		public NeuralNetMatrix Subtract(NeuralNetMatrix m)
+		{
+			var result = new NeuralNetMatrix(RowLength, ColoumnLength);
+			for (int i = 0; i < RowLength; i++)
+			{
+				for (int j = 0; j < ColoumnLength; j++)
+				{
+					result[i, j] = Values[i][j] - m[i, j];
+				}
+			}
+			return result;
+		}
+
+		public NeuralNetMatrix Multiply(NeuralNetMatrix m)
+        {
+			var result = new NeuralNetMatrix(RowLength, ColoumnLength);
+			for (int i = 0; i < RowLength; i++)
+			{
+				for (int j = 0; j < ColoumnLength; j++)
+				{
+					result[i, j] = Values[i][j] * m[i, j];
+				}
+			}
+			return result;
+		}
+		public NeuralNetMatrix Divide(NeuralNetMatrix m)
+		{
+			var result = new NeuralNetMatrix(RowLength, ColoumnLength);
+			for (int i = 0; i < RowLength; i++)
+			{
+				for (int j = 0; j < ColoumnLength; j++)
+				{
+					result[i, j] = Values[i][j] / m[i, j];
+				}
+			}
+			return result;
+		}
+
+		public static NeuralNetMatrix Subtract(double a, NeuralNetMatrix b)
 		{
 			var result = new NeuralNetMatrix(b.RowLength, b.ColoumnLength);
 			for (int i = 0; i < result.RowLength; i++)
@@ -227,67 +207,31 @@ namespace MyMachineLearningLibrary
 			return result;
 		}
 
-		public static NeuralNetMatrix Subtract(NeuralNetMatrix a, NeuralNetMatrix b)
+		public NeuralNetMatrix Log()
 		{
-            var result = new NeuralNetMatrix(a.RowLength, a.ColoumnLength);
+			var result = new NeuralNetMatrix(RowLength, ColoumnLength);
 			for (int i = 0; i < result.RowLength; i++)
 			{
 				for (int j = 0; j < result.ColoumnLength; j++)
 				{
-                    result[i,j] = a[i, j] - b[i, j];
-				}
-			}
-            return result;
-		}
-
-		public static NeuralNetMatrix ScalarAbs(NeuralNetMatrix a)
-		{
-			var result = new NeuralNetMatrix(a.RowLength, a.ColoumnLength);
-			for (int i = 0; i < result.RowLength; i++)
-			{
-				for (int j = 0; j < result.ColoumnLength; j++)
-				{
-                    result[i, j] = Math.Abs(a[i, j]);
+					result[i, j] = Math.Log(Values[i][j]);
 				}
 			}
 			return result;
 		}
 
-		public static NeuralNetMatrix Log(NeuralNetMatrix a)
+		public NeuralNetMatrix Exponent()
 		{
-			var result = new NeuralNetMatrix(a.RowLength, a.ColoumnLength);
+			var result = new NeuralNetMatrix(RowLength, ColoumnLength);
 			for (int i = 0; i < result.RowLength; i++)
 			{
 				for (int j = 0; j < result.ColoumnLength; j++)
 				{
-					result[i, j] = Math.Log(a[i, j]);
+					result[i, j] = Math.Exp(Values[i][j]);
 				}
 			}
 			return result;
 		}
-
-		public static NeuralNetMatrix Exponent(NeuralNetMatrix a)
-		{
-			var result = new NeuralNetMatrix(a.RowLength, a.ColoumnLength);
-			for (int i = 0; i < result.RowLength; i++)
-			{
-				for (int j = 0; j < result.ColoumnLength; j++)
-				{
-					result[i, j] = Math.Exp(a[i, j]);
-				}
-			}
-			return result;
-		}
-
-        public double RowSum(int rowIndex)
-        {
-            return Values[rowIndex].Sum();
-        }
-
-		//public double RowMax(int rowIndex)
-		//{
-		//	return Values[rowIndex].Max();
-		//}
 
 		/// <summary>
 		/// Compares two NeuralNetMatrices to see if one has larger values than the other
@@ -319,28 +263,28 @@ namespace MyMachineLearningLibrary
 			return result;
 		}
 
-		public static NeuralNetMatrix DotProduct(NeuralNetMatrix a, NeuralNetMatrix b)
-        {
-            if (a.ColoumnLength != b.RowLength)
-                throw new Exception("Columns and Rows must equal");
+		public NeuralNetMatrix DotProduct(NeuralNetMatrix b)
+		{
+			if (ColoumnLength != b.RowLength)
+				throw new Exception("Columns and Rows must equal");
 
-            NeuralNetMatrix result = new NeuralNetMatrix(a.RowLength, b.ColoumnLength);
+			NeuralNetMatrix result = new NeuralNetMatrix(RowLength, b.ColoumnLength);
 
-            for (int i = 0; i < result.RowLength; i++)
-            {
-                for (int j = 0; j < result.ColoumnLength; j++)
-                {
-                    double sum = 0;
-                    for (int k = 0; k < a.ColoumnLength; k++)
-                    {
-                        sum += a[i, k] * b[k, j];
-                    }
-                    result[i, j] = sum;
-                }
-            }
+			for (int i = 0; i < result.RowLength; i++)
+			{
+				for (int j = 0; j < result.ColoumnLength; j++)
+				{
+					double sum = 0;
+					for (int k = 0; k < ColoumnLength; k++)
+					{
+						sum += Values[i][k] * b[k, j];
+					}
+					result[i, j] = sum;
+				}
+			}
 
-            return result;
-        }
+			return result;
+		}
 
         public NeuralNetMatrix Transpose()
         {
@@ -386,30 +330,6 @@ namespace MyMachineLearningLibrary
             return result;
         }
 
-        public void Randomize()
-        {
-            Random rng = new();
-            for (int i = 0; i < RowLength; i++)
-            {
-                for (int j = 0; j < ColoumnLength; j++)
-                {
-                    Values[i][j] = (rng.NextDouble() * 2) - 1;
-                }
-            }
-        }
-
-        public void Mutate(double mutationRate)
-        {
-            Random rng = new();
-            for (int i = 0; i < RowLength; i++)
-            {
-                for (int j = 0; j < ColoumnLength; j++)
-                {
-                    Values[i][j] = rng.NextDouble() < mutationRate ? GaussianDistribution(0, .1) : Values[i][j];
-                }
-            }
-        }
-
         public NeuralNetMatrix Copy()
         {
             var copy = new NeuralNetMatrix(RowLength, ColoumnLength);
@@ -421,16 +341,6 @@ namespace MyMachineLearningLibrary
                 }
             }
             return copy;
-        }
-
-        private double GaussianDistribution(double mean, double stddev)
-        {
-            Random rand = new Random(); //reuse this if you are generating many
-            double u1 = 1.0 - rand.NextDouble(); //uniform(0,1] random doubles
-            double u2 = 1.0 - rand.NextDouble();
-            double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
-            double randNormal = mean + stddev * randStdNormal; //random normal(mean,stdDev^2)
-            return randNormal;
         }
     }
 }

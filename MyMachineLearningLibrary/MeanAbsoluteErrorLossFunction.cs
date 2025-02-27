@@ -15,8 +15,8 @@ namespace MyMachineLearningLibrary
 
 		public double CalculateLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs)
 		{
-			var lossMatrix = NeuralNetMatrix.Subtract(targets, outputs);
-			lossMatrix.ScalarAbs();
+			var lossMatrix = targets.Subtract(outputs);
+			lossMatrix = lossMatrix.AbsoluteValue();
 
 			return lossMatrix.Average;
 		}
