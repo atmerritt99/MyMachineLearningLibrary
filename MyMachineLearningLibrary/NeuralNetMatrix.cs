@@ -143,6 +143,19 @@ namespace MyMachineLearningLibrary
 			return result;
 		}
 
+		public NeuralNetMatrix Add(double m)
+		{
+			var result = new NeuralNetMatrix(RowLength, ColoumnLength);
+			for (int i = 0; i < RowLength; i++)
+			{
+				for (int j = 0; j < ColoumnLength; j++)
+				{
+					result[i, j] = Values[i][j] + m;
+				}
+			}
+			return result;
+		}
+
 		public NeuralNetMatrix Subtract(double m)
 		{
 			var result = new NeuralNetMatrix(RowLength, ColoumnLength);
@@ -228,6 +241,19 @@ namespace MyMachineLearningLibrary
 				for (int j = 0; j < result.ColoumnLength; j++)
 				{
 					result[i, j] = Math.Exp(Values[i][j]);
+				}
+			}
+			return result;
+		}
+
+		public NeuralNetMatrix SquareRoot()
+		{
+			var result = new NeuralNetMatrix(RowLength, ColoumnLength);
+			for (int i = 0; i < result.RowLength; i++)
+			{
+				for (int j = 0; j < result.ColoumnLength; j++)
+				{
+					result[i, j] = Math.Sqrt(Values[i][j]);
 				}
 			}
 			return result;

@@ -14,9 +14,9 @@ namespace MyMachineLearningLibrary
 		public NeuralNetMatrix Gradients { get; set; }
 		public NeuralNetMatrix LayerOutputs { get; set; }
 		public int NumberOfPerceptrons { get; set; }
-		public void InitializeLayer(int numberOfPerceptronsInPreviousLayer, NeuralNetMatrix previousLayersGradients);
+		public void InitializeLayer(int numberOfPerceptronsInPreviousLayer, ILayer previousLayer, int layerIndex);
 		public NeuralNetMatrix FeedForward(NeuralNetMatrix neuralNetMatrix);
 		public NeuralNetMatrix TransposeWeights();
-		public NeuralNetMatrix Backpropagate(NeuralNetMatrix errors, double learningRate, NeuralNetMatrix previousLayer, int batchSize);
+		public NeuralNetMatrix Backpropagate(NeuralNetMatrix errors, double learningRate, double decayRate, NeuralNetMatrix previousLayer, int batchSize, int currentEpoch, IOptimizer optimizer);
 	}
 }

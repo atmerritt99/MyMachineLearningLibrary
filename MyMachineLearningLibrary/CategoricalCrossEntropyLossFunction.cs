@@ -10,6 +10,7 @@ namespace MyMachineLearningLibrary
 	{
 		public NeuralNetMatrix CalculateDerivativeOfLoss(NeuralNetMatrix targets, NeuralNetMatrix outputs)
 		{
+			//Assumes Developer uses Softmax activation function
 			return outputs.Subtract(targets);
 		}
 

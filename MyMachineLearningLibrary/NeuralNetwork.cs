@@ -9,8 +9,10 @@ namespace MyMachineLearningLibrary
 {
 	public class NeuralNetwork
 	{
+		public IOptimizer Optimizer { get; set; }
 		public List<ILayer> Layers { get; set; }
 		public double LearningRate { get; set; }
+		public int DecayRate { get; set; }
 		public int NumberOfInputs { get; set; }
 		public ILossFunction LossFunction { get; set; }
 
@@ -18,14 +20,23 @@ namespace MyMachineLearningLibrary
 		{
 			Layers = new List<ILayer>();
 			LossFunction = new NotDefinedLossFunction();
+			Optimizer = new GradientDescentOptimizer();
 		}
 
-		public NeuralNetwork(int NumberOfInputs, double LearningRate, ILossFunction LossFunction) 
+		public NeuralNetwork(int NumberOfInputs, double LearningRate, int DecayRate, ILossFunction LossFunction) 
 		{
 			Layers = [new InputLayer(NumberOfInputs)];
 			this.LearningRate = LearningRate;
 			this.NumberOfInputs = NumberOfInputs;
 			this.LossFunction = LossFunction;
+			this.DecayRate = DecayRate;
+			Optimizer = new GradientDescentOptimizer();
+		}
+
+		public void Compile(IOptimizer optimizer)
+		{
+			this.Optimizer = optimizer;
+			optimizer.Compile(this);
 		}
 
 		public void AddLayer(ILayer layer)
@@ -36,7 +47,7 @@ namespace MyMachineLearningLibrary
 			}
 
 			var previousLayer = Layers.Last();
-			layer.InitializeLayer(previousLayer.NumberOfPerceptrons, previousLayer.Gradients);
+			layer.InitializeLayer(previousLayer.NumberOfPerceptrons, previousLayer, Layers.Count);
 			Layers.Add(layer);
 		}
 
@@ -82,7 +93,7 @@ namespace MyMachineLearningLibrary
 			return result;
 		}
 
-		public void Train(int numberOfEpochs, double[][] trainInputsArray, double[][] trainTargetsArray, int batchSize = 1 /*Stochastic Gradient Descent by default*/, bool verbose = false)
+		public void Train(int numberOfEpochs, double[][] trainInputsArray, double[][] trainTargetsArray, int batchSize = 1 /*Stochastic Gradient Descent by default*/, int reportingRate = 1)
 		{
 			for (int currentEpoch = 1; currentEpoch <= numberOfEpochs; currentEpoch++)
 			{
@@ -115,7 +126,7 @@ namespace MyMachineLearningLibrary
 					for (int j = Layers.Count - 1; j > 0; j--)
 					{
 						var currentBatchLength = (i + 1) == trainInputsArray.Length ? trainInputsArray.Length - (batchSize * batchCount) : batchSize;
-						currentErrors = Layers[j].Backpropagate(currentErrors, LearningRate, Layers[j - 1].LayerOutputs, currentBatchLength);
+						currentErrors = Layers[j].Backpropagate(currentErrors, LearningRate, DecayRate, Layers[j - 1].LayerOutputs, currentBatchLength, currentEpoch, Optimizer);
 					}
 					batchCount++;
 					currentErrors = new NeuralNetMatrix(trainTargetsArray[0].Length, 1);
@@ -123,7 +134,7 @@ namespace MyMachineLearningLibrary
 
 				cost /= trainInputsArray.Length;
 
-				if (verbose)
+				if (reportingRate > 0 && currentEpoch % reportingRate == 0)
 					Console.WriteLine($"EPOCH: {currentEpoch}\tCOST: {cost}");
 			}
 		}

@@ -42,7 +42,7 @@ namespace MyMachineLearningLibrary
 			return LayerOutputs;
 		}
 
-		public void InitializeLayer(int numberOfPerceptronsInPreviousLayer, NeuralNetMatrix previousLayersGradients)
+		public void InitializeLayer(int numberOfPerceptronsInPreviousLayer, ILayer layer, int layerIndex)
 		{
 			throw new NotImplementedException();
 		}
@@ -52,7 +52,7 @@ namespace MyMachineLearningLibrary
 			throw new NotImplementedException();
 		}
 
-		public NeuralNetMatrix Backpropagate(NeuralNetMatrix errors, double learningRate, NeuralNetMatrix previousLayer, int batchSize)
+		public NeuralNetMatrix Backpropagate(NeuralNetMatrix errors, double learningRate, double decayRate, NeuralNetMatrix previousLayer, int batchSize, int currentEpoch, IOptimizer optimizer)
 		{
 			throw new NotImplementedException();
 		}
