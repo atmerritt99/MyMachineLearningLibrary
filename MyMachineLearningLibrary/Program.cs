@@ -4,7 +4,8 @@
  TODO:
 	Rename variables, write better comments
 	Currently, Save and Load works by making all variables public methods, I should look into changing this
-	Add Softmax Activation and Categorical Cross Entropy Loss Function
+	Add Weight Initialization Methods
+	Speed up matrix multiplication using parallel programming
  */
 
 
@@ -44,7 +45,6 @@ for (int i = 0; i < SIZE_OF_DATA_SET; i++)
 
 		trainingY[i] = new double[1];
 		trainingY[i][0] = trainingX[i].Sum() < NUMBER_OF_INPUTS / 2.0 ? 0 : 1;
-		//trainingY[i][1] = trainingX[i].Sum() >= 5 ? 0 : 1;
 	}
 	else
 	{
@@ -57,22 +57,17 @@ for (int i = 0; i < SIZE_OF_DATA_SET; i++)
 
 		testingY[i - SIZE_OF_TRAINING_DATA] = new double[1];
 		testingY[i - SIZE_OF_TRAINING_DATA][0] = testingX[i - SIZE_OF_TRAINING_DATA].Sum() < NUMBER_OF_INPUTS / 2.0 ? 0 : 1;
-		//testingY[i - SIZE_OF_TRAINING_DATA][1] = testingX[i - SIZE_OF_TRAINING_DATA].Sum() >= 5 ? 0 : 1;
 	}
 
 }
 
-var nn = new NeuralNetwork(NUMBER_OF_INPUTS, .00001, 0, new BinaryCrossEntropyLossFunction());
-nn.AddLayer(new DenseLayer(25, new ReluActivationFunction(.001)));
-nn.AddLayer(new DenseLayer(20, new ReluActivationFunction(.001)));
-nn.AddLayer(new DenseLayer(15, new ReluActivationFunction(.001)));
-nn.AddLayer(new DenseLayer(10, new ReluActivationFunction(.001)));
-nn.AddLayer(new DenseLayer(5, new ReluActivationFunction(.001)));
+var nn = new NeuralNetwork(NUMBER_OF_INPUTS, .001, 1, new BinaryCrossEntropyLossFunction());
+nn.AddLayer(new DenseLayer(128, new ReluActivationFunction(.01)));
 nn.AddLayer(new DenseLayer(1, new SigmoidActivationFunction()));
 
 nn.Compile(new AdamOptimizer());
 
-nn.Train(5000, trainingX, trainingY, 8, 10);
+nn.Train(1500, trainingX, trainingY, 1, 10);
 
 nn.Save("test.json");
 

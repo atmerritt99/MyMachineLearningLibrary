@@ -68,21 +68,17 @@ namespace MyMachineLearningLibrary
 			return result.Flatten();
 		}
 
-		/// <summary>
-		/// Given an input to the neural network, return the predicted class
-		/// </summary>
-		/// <param name="inputsArray"></param>
-		/// <returns>If the output layer has only 1 perceptron, return an int array size 1 with either a 1 or a 0. Otherwise, return an int array with a 1 marking the predicted class, and a 0 marking the other classes</returns>
-		public int[] Classify(double[] inputsArray)
+		private int[] MakeClassification(double[] predictions)
 		{
-			var predictions = Predict(inputsArray);
 			var result = new int[predictions.Length];
 
 			if (predictions.Length == 1)
 			{
 				var prediction = predictions[0];
 
-				result[0] = prediction >= .5 ? 1 : 0;
+				var t = Layers.Last().ActivationFunction.MinClass == 0 ? .5 : 0;
+
+				result[0] = prediction >= t ? Layers.Last().ActivationFunction.MaxClass : Layers.Last().ActivationFunction.MinClass;
 
 				return result;
 			}
@@ -91,6 +87,17 @@ namespace MyMachineLearningLibrary
 			result[indexOfMaxValue] = 1;
 
 			return result;
+		}
+
+		/// <summary>
+		/// Given an input to the neural network, return the predicted class
+		/// </summary>
+		/// <param name="inputsArray"></param>
+		/// <returns>If the output layer has only 1 perceptron, return an int array size 1 with either a 1 or a 0. Otherwise, return an int array with a 1 marking the predicted class, and a 0 marking the other classes</returns>
+		public int[] Classify(double[] inputsArray)
+		{
+			var predictions = Predict(inputsArray);
+			return MakeClassification(predictions);
 		}
 
 		public void Train(int numberOfEpochs, double[][] trainInputsArray, double[][] trainTargetsArray, int batchSize = 1 /*Stochastic Gradient Descent by default*/, int reportingRate = 1)
@@ -103,6 +110,8 @@ namespace MyMachineLearningLibrary
 
 				double cost = 0; // The cost is the average of all the loss
 
+				double accuracy = 0;
+
 				var currentErrors = new NeuralNetMatrix(trainTargetsArray[0].Length, 1);
 				for (int i = 0; i < trainInputsArray.Length; i++)
 				{
@@ -110,13 +119,17 @@ namespace MyMachineLearningLibrary
 					var inputsArray = trainInputsArray[k];
 					var targetsArray = trainTargetsArray[k];
 
-					Predict(inputsArray);
+					var outputsArray = Predict(inputsArray);
 					var outputsMatrix = Layers.Last().LayerOutputs;
 
 					// Calculate the errors
 					var targetsMatrix = new NeuralNetMatrix(targetsArray);
 					currentErrors = currentErrors.Add(LossFunction.CalculateDerivativeOfLoss(targetsMatrix, outputsMatrix));
 					cost += LossFunction.CalculateLoss(targetsMatrix, outputsMatrix);
+
+					// Calculate the accuracy
+					var classifications = MakeClassification(outputsArray);
+					accuracy = TestClassification(classifications, targetsArray) ? accuracy + 1 : accuracy;
 
 					// Finish the batch before preceeding
 					if (!((i + 1) % batchSize == 0 || (i + 1) == trainInputsArray.Length))
@@ -133,10 +146,21 @@ namespace MyMachineLearningLibrary
 				}
 
 				cost /= trainInputsArray.Length;
+				accuracy /= trainInputsArray.Length;
 
 				if (reportingRate > 0 && currentEpoch % reportingRate == 0)
-					Console.WriteLine($"EPOCH: {currentEpoch}\tCOST: {cost}");
+					Console.WriteLine($"EPOCH: {currentEpoch}\tCOST: {cost}\tTRAIN ACCURACY: {accuracy}");
 			}
+		}
+
+		private bool TestClassification(int[] classifications, double[] targets)
+		{
+			for (int i = 0; i < classifications.Length; i++)
+			{
+				if (classifications[i] != targets[i])
+					return false;
+			}
+			return true;
 		}
 
 		/// <summary>
@@ -153,20 +177,16 @@ namespace MyMachineLearningLibrary
 				classifications[i] = Classify(testInputsArray[i]);
 			}
 
-			double accuracy = 1;
+			double accuracy = 0;
 			for (int i = 0; i < classifications.Length; i++)
 			{
-				// In the case that there is only 1 perceptron in the output layer, compare whether or not the predicted class is a 1 or not (-1)
-				int predictedClass = classifications[i].ToList().IndexOf(1);
-				int actualClass = testTargetsArray[i].ToList().IndexOf(1);
-
-				if (predictedClass != actualClass)
+				if(TestClassification(classifications[i], testTargetsArray[i]))
 				{
-					accuracy -= (1.0 / testInputsArray.Length);
+					accuracy++;
 				}
 			}
 
-			return accuracy;
+			return accuracy / classifications.Length;
 		}
 
 		/// <summary>

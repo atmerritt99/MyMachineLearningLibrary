@@ -10,6 +10,8 @@ namespace MyMachineLearningLibrary
 	[JsonInterfaceConverter(typeof(InterfaceConverter<IActivationFunction>))]
 	public interface IActivationFunction
 	{
+		public int MaxClass { get; set; }
+		public int MinClass { get; set; }
 		public double ActivateFunction(double x);
 		public double ActivateDerivativeOfFunction(double x);
 		public NeuralNetMatrix ActivateFunction(NeuralNetMatrix m);

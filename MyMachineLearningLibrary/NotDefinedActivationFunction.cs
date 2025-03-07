@@ -8,6 +8,9 @@ namespace MyMachineLearningLibrary
 {
 	public class NotDefinedActivationFunction : IActivationFunction
 	{
+		public int MaxClass { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		public int MinClass { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
 		public double ActivateDerivativeOfFunction(double x)
 		{
 			throw new NotImplementedException();

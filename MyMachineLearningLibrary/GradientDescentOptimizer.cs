@@ -10,7 +10,7 @@ namespace MyMachineLearningLibrary
 	{
 		public void Compile(NeuralNetwork neuralNetwork)
 		{
-			throw new NotImplementedException();
+			
 		}
 
 		public NeuralNetMatrix OptimizeGradients(NeuralNetMatrix gradients, double learningRate, double decayRate, int currentEpoch, int layerIndex)
@@ -18,7 +18,7 @@ namespace MyMachineLearningLibrary
 			//Calculate Decay
 			var decay = currentEpoch / decayRate;
 			var alpha = decayRate == 0 ? learningRate : learningRate / (Math.Sqrt(decay) + 1e-8);
-			return gradients.Multiply(learningRate);
+			return gradients.Multiply(alpha);
 		}
 	}
 }

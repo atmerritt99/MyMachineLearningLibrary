@@ -8,6 +8,9 @@ namespace MyMachineLearningLibrary
 {
 	public class SigmoidActivationFunction : IActivationFunction
 	{
+		public int MaxClass { get; set; } = 1;
+		public int MinClass { get; set; } = 0;
+
 		public NeuralNetMatrix ActivateDerivativeOfFunction(NeuralNetMatrix m)
 		{
 			NeuralNetMatrix result = new NeuralNetMatrix(m.RowLength, m.ColoumnLength);

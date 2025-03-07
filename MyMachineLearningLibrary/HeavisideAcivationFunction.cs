@@ -9,6 +9,9 @@ namespace MyMachineLearningLibrary
 	public class HeavisideAcivationFunction : IActivationFunction
 	{
 		public double Threshold { get; set; }
+		public int MaxClass { get; set; } = 1;
+		public int MinClass { get; set; } = 0;
+
 		public HeavisideAcivationFunction(double threshold = 0)
 		{
 			Threshold = threshold;
@@ -40,7 +43,7 @@ namespace MyMachineLearningLibrary
 			{
 				for (int j = 0; j < m.ColoumnLength; j++)
 				{
-					result[i, j] = m[i, j] >= Threshold ? 1 : 0;
+					result[i, j] = m[i, j] >= Threshold ? MaxClass : MinClass;
 				}
 			}
 			return result;
@@ -48,7 +51,7 @@ namespace MyMachineLearningLibrary
 
 		public double ActivateFunction(double x)
 		{
-			return x >= Threshold ? 1 : 0;
+			return x >= Threshold ? MaxClass : MinClass;
 		}
 
 		/// <summary>

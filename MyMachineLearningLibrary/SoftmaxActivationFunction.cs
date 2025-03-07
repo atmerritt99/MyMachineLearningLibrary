@@ -8,6 +8,9 @@ namespace MyMachineLearningLibrary
 {
 	public class SoftmaxActivationFunction : IActivationFunction
 	{
+		public int MaxClass { get; set; } = 1;
+		public int MinClass { get; set; } = 0;
+
 		public NeuralNetMatrix ActivateDerivativeOfFunction(NeuralNetMatrix m)
 		{
 			throw new NotImplementedException();

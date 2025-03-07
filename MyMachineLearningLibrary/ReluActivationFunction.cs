@@ -8,7 +8,10 @@ namespace MyMachineLearningLibrary
 {
 	public class ReluActivationFunction : IActivationFunction
 	{
+		
 		public double Leak { get; set; }
+		public int MaxClass { get; set; } = 1;
+		public int MinClass { get; set; } = 0;
 
 		public ReluActivationFunction(double Leak = 0)
 		{

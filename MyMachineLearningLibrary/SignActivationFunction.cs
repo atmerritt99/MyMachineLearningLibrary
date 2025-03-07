@@ -8,6 +8,9 @@ namespace MyMachineLearningLibrary
 {
 	public class SignActivationFunction : IActivationFunction
 	{
+		public int MaxClass { get; set; } = 1;
+		public int MinClass { get; set; } = -1;
+
 		public double ActivateDerivativeOfFunction(double x)
 		{
 			double e2 = Math.Exp(2 * x);
@@ -32,7 +35,7 @@ namespace MyMachineLearningLibrary
 
 		public double ActivateFunction(double x)
 		{
-			return x >= 0 ? 1 : -1;
+			return x >= 0 ? MaxClass : MinClass;
 		}
 
 		public NeuralNetMatrix ActivateFunction(NeuralNetMatrix m)
@@ -42,7 +45,7 @@ namespace MyMachineLearningLibrary
 			{
 				for (int j = 0; j < m.ColoumnLength; j++)
 				{
-					result[i, j] = m[i, j] >= 0 ? 1 : -1;
+					result[i, j] = m[i, j] >= 0 ? MaxClass : MinClass;
 				}
 			}
 			return result;

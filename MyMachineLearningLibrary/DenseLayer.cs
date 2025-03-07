@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyMachineLearningLibrary
+﻿namespace MyMachineLearningLibrary
 {
 	public class DenseLayer : ILayer
 	{
 		public int LayerIndex { get; set; }
-		public double Alpha { get ; set; } // Learning Rate
-		public double Beta1 { get; set; }
-		public double Beta2 { get; set; }
-		public int DecayRate { get; set; }
-		public NeuralNetMatrix M { get; set; } // First Momentum
-		public NeuralNetMatrix V { get; set; } // Second Momentum
-		public double Epsilon { get; set; }
 		public int NumberOfPerceptrons { get; set; }
 		public IActivationFunction ActivationFunction { get; set; }
 		public IPerceptron[] Perceptrons { get; set; }
@@ -50,12 +37,6 @@ namespace MyMachineLearningLibrary
 
 		public DenseLayer(int numberOfPerceptrons, IActivationFunction activationFunction)
 		{
-			Alpha = .01;
-			Beta1 = .9;
-			Beta2 = .999;
-			Epsilon = 1e-8;
-			DecayRate = 1;
-
 			NumberOfPerceptrons = numberOfPerceptrons;
 			Perceptrons = new DensePerceptron[numberOfPerceptrons];
 			ActivationFunction = activationFunction;
@@ -72,19 +53,20 @@ namespace MyMachineLearningLibrary
 			var x = optimizer.OptimizeGradients(Gradients, learningRate, decayRate, currentEpoch, LayerIndex);
 
 			var previousLayerTransposition = previousLayer.Transpose();
-			var outputDeltas = x.DotProduct(previousLayerTransposition);
+			var weightDeltas = x.DotProduct(previousLayerTransposition);
 
 			//Update the Weights and Biases With Gradient Descent Optimization
 			for (int i = 0; i < Perceptrons.Length; i++)
 			{
 				for (int j = 0; j < Perceptrons[i].Weights.Length; j++)
 				{
-					Perceptrons[i].Weights[j] -= outputDeltas[i, j];
+					Perceptrons[i].Weights[j] -= weightDeltas[i, j];
 				}
 			}
 
 			for (int i = 0; i < Perceptrons.Length; i++)
 			{
+				//Bias deltas are the gradients passed through the optimizer
 				Perceptrons[i].Bias -= x[i, 0];
 			}
 
@@ -113,8 +95,6 @@ namespace MyMachineLearningLibrary
 			}
 
 			Gradients = new NeuralNetMatrix(Perceptrons.Length, 1);
-			M = new NeuralNetMatrix(Gradients.RowLength, Gradients.ColoumnLength);
-			V = new NeuralNetMatrix(Gradients.RowLength, Gradients.ColoumnLength);
 		}
 
 		public NeuralNetMatrix TransposeWeights()
