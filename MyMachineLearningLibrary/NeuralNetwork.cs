@@ -33,8 +33,10 @@ namespace MyMachineLearningLibrary
 			Optimizer = new GradientDescentOptimizer();
 		}
 
-		public void Compile(IOptimizer optimizer)
+		public void Compile(IOptimizer optimizer, IWeightInitializtion? weightInitializtion = null)
 		{
+			weightInitializtion ??= new UniformWeightInitialization();
+			weightInitializtion.InitializeWeights(this);
 			this.Optimizer = optimizer;
 			optimizer.Compile(this);
 		}

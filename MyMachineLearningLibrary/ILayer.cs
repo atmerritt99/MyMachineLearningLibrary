@@ -10,6 +10,7 @@ namespace MyMachineLearningLibrary
 	[JsonInterfaceConverter(typeof(InterfaceConverter<ILayer>))]
 	public interface ILayer
 	{
+		public IPerceptron[] Perceptrons { get; set; }
 		public IActivationFunction ActivationFunction { get; set; }
 		public NeuralNetMatrix Gradients { get; set; }
 		public NeuralNetMatrix LayerOutputs { get; set; }

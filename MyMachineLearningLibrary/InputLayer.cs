@@ -17,6 +17,7 @@ namespace MyMachineLearningLibrary
 		public NeuralNetMatrix Weights { get; set; }
 		[JsonIgnore]
 		public NeuralNetMatrix Biases { get; set; }
+		public IPerceptron[] Perceptrons { get; set; }
 
 		public InputLayer(int NumberOfPerceptrons)
 		{
