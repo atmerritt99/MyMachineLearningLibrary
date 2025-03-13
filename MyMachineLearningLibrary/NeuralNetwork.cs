@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using MyMachineLearningLibrary.Activation_Functions;
+using MyMachineLearningLibrary.Optimizers;
+using MyMachineLearningLibrary.Layers;
+using MyMachineLearningLibrary.Loss_Functions;
+using MyMachineLearningLibrary.Weight_Initialization;
 
 namespace MyMachineLearningLibrary
 {
@@ -60,7 +65,7 @@ namespace MyMachineLearningLibrary
 		/// <returns>The output of the neural network</returns>
 		public double[] Predict(double[] inputsArray)
 		{
-			var result = new NeuralNetMatrix(inputsArray);
+			var result = new MatrixExtension(inputsArray);
 
 			foreach(var layer in Layers)
 			{
@@ -114,7 +119,7 @@ namespace MyMachineLearningLibrary
 
 				double accuracy = 0;
 
-				var currentErrors = new NeuralNetMatrix(trainTargetsArray[0].Length, 1);
+				var currentErrors = new MatrixExtension(trainTargetsArray[0].Length, 1);
 				for (int i = 0; i < trainInputsArray.Length; i++)
 				{
 					int k = shuffledIndexes[i];
@@ -125,7 +130,7 @@ namespace MyMachineLearningLibrary
 					var outputsMatrix = Layers.Last().LayerOutputs;
 
 					// Calculate the errors
-					var targetsMatrix = new NeuralNetMatrix(targetsArray);
+					var targetsMatrix = new MatrixExtension(targetsArray);
 					currentErrors = currentErrors.Add(LossFunction.CalculateDerivativeOfLoss(targetsMatrix, outputsMatrix));
 					cost += LossFunction.CalculateLoss(targetsMatrix, outputsMatrix);
 
@@ -144,7 +149,7 @@ namespace MyMachineLearningLibrary
 						currentErrors = Layers[j].Backpropagate(currentErrors, LearningRate, DecayRate, Layers[j - 1].LayerOutputs, currentBatchLength, currentEpoch, Optimizer);
 					}
 					batchCount++;
-					currentErrors = new NeuralNetMatrix(trainTargetsArray[0].Length, 1);
+					currentErrors = new MatrixExtension(trainTargetsArray[0].Length, 1);
 				}
 
 				cost /= trainInputsArray.Length;
