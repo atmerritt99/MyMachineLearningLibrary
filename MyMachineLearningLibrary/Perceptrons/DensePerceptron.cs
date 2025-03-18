@@ -14,6 +14,18 @@ namespace MyMachineLearningLibrary.Perceptrons
 		public double Bias { get; set; }
 		public IActivationFunction ActivationFunction { get; set; }
 
+		public void UniformRandomizeBias(double min = -1, double max = 1)
+		{
+			RandomExtension rng = new();
+			Bias = rng.NextDouble(min, max);
+		}
+
+		public void NormalRandomizeBias(double mean = 0, double standardDeviation = .1)
+		{
+			RandomExtension rng = new();
+			Bias = rng.NormalDistribution(mean, standardDeviation);
+		}
+
 		public void NormalRandomizeWeights(double mean = 0, double standardDeviation = .1)
 		{
 			RandomExtension rng = new();
@@ -21,7 +33,6 @@ namespace MyMachineLearningLibrary.Perceptrons
 			{
 				Weights[i] = rng.NormalDistribution(mean, standardDeviation);
 			}
-			Bias = rng.NormalDistribution(mean, standardDeviation);
 		}
 
 		public void UniformRandomizeWeights(double min = -1, double max = 1)
@@ -31,7 +42,6 @@ namespace MyMachineLearningLibrary.Perceptrons
 			{
 				Weights[i] = rng.NextDouble(min, max);
 			}
-			Bias = rng.NextDouble(min, max);
 		}
 
 		public DensePerceptron()

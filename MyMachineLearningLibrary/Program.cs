@@ -1,4 +1,5 @@
-﻿using MyMachineLearningLibrary;
+﻿using System.Diagnostics;
+using MyMachineLearningLibrary;
 using MyMachineLearningLibrary.Activation_Functions;
 using MyMachineLearningLibrary.Layers;
 using MyMachineLearningLibrary.Loss_Functions;
@@ -65,13 +66,13 @@ for (int i = 0; i < SIZE_OF_DATA_SET; i++)
 
 }
 
-var nn = new NeuralNetwork(NUMBER_OF_INPUTS, .001, 10, new BinaryCrossEntropyLossFunction());
-nn.AddLayer(new DenseLayer(128, new ReluActivationFunction(.01)));
+var nn = new NeuralNetwork(NUMBER_OF_INPUTS, .001, 0, new BinaryCrossEntropyLossFunction());
+nn.AddLayer(new DenseLayer(256, new ReluActivationFunction(.01)));
 nn.AddLayer(new DenseLayer(1, new SigmoidActivationFunction()));
 
-nn.Compile(new AdamOptimizer(), new UniformXavierWeightInitialization());
+nn.Compile(new AdamOptimizer());
 
-nn.Train(50, trainingX, trainingY, 1, 10);
+nn.Train(200, trainingX, trainingY, 1, 1);
 
 nn.Save("test.json");
 
@@ -114,16 +115,58 @@ Console.WriteLine($"Test Accuracy: {accuracy}");
 //	testTargets[i][testData[i].Label] = 1;
 //}
 
-//var nn = new NeuralNetwork(784, .01, 0, new CategoricalCrossEntropyLossFunction());
+//var nn = new NeuralNetwork(784, .001, 0, new CategoricalCrossEntropyLossFunction());
 //nn.AddLayer(new DenseLayer(128, new ReluActivationFunction()));
+//nn.AddLayer(new DenseLayer(32, new ReluActivationFunction()));
 //nn.AddLayer(new DenseLayer(10, new SoftmaxActivationFunction()));
 
-//nn.Compile(new GradientDescentOptimizer(), new UniformXavierWeightInitialization());
+//nn.Compile(new AdamOptimizer());
 
-//nn.Train(50, trainInputs, trainTargets, 64, 1);
+//nn.Train(25, trainInputs, trainTargets, 128, 1);
 
 //var accuracy = nn.Test(testingInputs, testTargets);
 
 //Console.WriteLine("Model Accuracy: " + accuracy.ToString());
 
 //nn.Save("MnistModel.json");
+
+//int inputSize = 20000;
+
+//var stopwatch = new Stopwatch();
+
+//var input = new MatrixExtension(inputSize, 1);
+//var h1 = new MatrixExtension(6000, inputSize);
+
+//for (int i = 0; i < input.RowLength; i++)
+//{
+//	input[i, 0] = 1;
+//	for (int j = 0; j < h1.RowLength; j++)
+//	{
+//		h1[j, i] = -1;
+//	}
+//}
+
+//stopwatch.Start();
+
+////var result = h1.DotProduct(input);
+
+//var result = MatrixExtension.MultithreadedDotProduct(h1, input, 8);
+
+//stopwatch.Stop();
+
+//Console.WriteLine(stopwatch.ElapsedMilliseconds);
+
+//var multiplicationTable = new MatrixExtension(13, 13);
+
+//for (int i = 0; i < 13; i++)
+//{
+//	for (int j = 0; j < 13; j++)
+//	{
+//		multiplicationTable[i, j] = i * j;
+//	}
+//}
+
+//var x = multiplicationTable.GetSubMatrix(0, 10, 0, 10);
+//var y = multiplicationTable.GetSubMatrix(10, 3, 10, 3);
+
+//Console.WriteLine();

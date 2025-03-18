@@ -24,7 +24,7 @@ namespace MyMachineLearningLibrary.Weight_Initialization
 						numberOfOutputs = neuralNetwork.Layers[i + 1].NumberOfPerceptrons;
 					}
 
-					double x = Math.Sqrt(6.0 / numberOfInputs + numberOfOutputs);
+					double x = Math.Sqrt(6.0 / (numberOfInputs + numberOfOutputs));
 
 					perceptron.UniformRandomizeWeights(-x, x);
 				}

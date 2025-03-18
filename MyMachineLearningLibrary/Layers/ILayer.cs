@@ -18,8 +18,8 @@ namespace MyMachineLearningLibrary.Layers
 		public MatrixExtension Gradients { get; set; }
 		public MatrixExtension LayerOutputs { get; set; }
 		public int NumberOfPerceptrons { get; set; }
-		public void InitializeLayer(int numberOfPerceptronsInPreviousLayer, ILayer previousLayer, int layerIndex);
-		public MatrixExtension FeedForward(MatrixExtension neuralNetMatrix);
+		public void InitializeLayer(int numberOfPerceptronsInPreviousLayer, int layerIndex);
+		public MatrixExtension FeedForward(MatrixExtension layerInputs);
 		public MatrixExtension TransposeWeights();
 		public MatrixExtension Backpropagate(MatrixExtension errors, double learningRate, double decayRate, MatrixExtension previousLayer, int batchSize, int currentEpoch, IOptimizer optimizer);
 	}

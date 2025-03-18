@@ -9,6 +9,7 @@ using MyMachineLearningLibrary.Optimizers;
 using MyMachineLearningLibrary.Layers;
 using MyMachineLearningLibrary.Loss_Functions;
 using MyMachineLearningLibrary.Weight_Initialization;
+using System.Diagnostics;
 
 namespace MyMachineLearningLibrary
 {
@@ -20,27 +21,30 @@ namespace MyMachineLearningLibrary
 		public int DecayRate { get; set; }
 		public int NumberOfInputs { get; set; }
 		public ILossFunction LossFunction { get; set; }
-
+		public MatrixExtension Inputs { get; set; }
 		private NeuralNetwork()
 		{
 			Layers = new List<ILayer>();
 			LossFunction = new NotDefinedLossFunction();
 			Optimizer = new GradientDescentOptimizer();
+			Inputs = new MatrixExtension();
 		}
 
 		public NeuralNetwork(int NumberOfInputs, double LearningRate, int DecayRate, ILossFunction LossFunction) 
 		{
-			Layers = [new InputLayer(NumberOfInputs)];
+			//Layers = [new InputLayer(NumberOfInputs)];
+			Layers = [];
 			this.LearningRate = LearningRate;
 			this.NumberOfInputs = NumberOfInputs;
 			this.LossFunction = LossFunction;
 			this.DecayRate = DecayRate;
 			Optimizer = new GradientDescentOptimizer();
+			Inputs = new MatrixExtension(NumberOfInputs, 1);
 		}
 
 		public void Compile(IOptimizer optimizer, IWeightInitializtion? weightInitializtion = null)
 		{
-			weightInitializtion ??= new UniformWeightInitialization();
+			weightInitializtion ??= new UniformXavierWeightInitialization();
 			weightInitializtion.InitializeWeights(this);
 			this.Optimizer = optimizer;
 			optimizer.Compile(this);
@@ -53,8 +57,16 @@ namespace MyMachineLearningLibrary
 				throw new Exception("Softmax Activation can only be used with Categorical Cross Entropy in this Library");
 			}
 
-			var previousLayer = Layers.Last();
-			layer.InitializeLayer(previousLayer.NumberOfPerceptrons, previousLayer, Layers.Count);
+			if(Layers.Count > 0)
+			{
+				var previousLayer = Layers.Last();
+				layer.InitializeLayer(previousLayer.NumberOfPerceptrons, Layers.Count);
+			}
+			else
+			{
+				layer.InitializeLayer(NumberOfInputs, Layers.Count);
+			}
+			
 			Layers.Add(layer);
 		}
 
@@ -65,6 +77,7 @@ namespace MyMachineLearningLibrary
 		/// <returns>The output of the neural network</returns>
 		public double[] Predict(double[] inputsArray)
 		{
+			Inputs = new MatrixExtension(inputsArray);
 			var result = new MatrixExtension(inputsArray);
 
 			foreach(var layer in Layers)
@@ -139,14 +152,18 @@ namespace MyMachineLearningLibrary
 					accuracy = TestClassification(classifications, targetsArray) ? accuracy + 1 : accuracy;
 
 					// Finish the batch before preceeding
-					if (!((i + 1) % batchSize == 0 || (i + 1) == trainInputsArray.Length))
-						continue;
+					// Using Stochasitic Gradient Descent until I fix batch learning
+					//if (!((i + 1) % batchSize == 0 || (i + 1) == trainInputsArray.Length))
+					//	continue;
 
 					// Backpropagate the errors
-					for (int j = Layers.Count - 1; j > 0; j--)
+					for (int j = Layers.Count - 1; j >= 0; j--)
 					{
 						var currentBatchLength = (i + 1) == trainInputsArray.Length ? trainInputsArray.Length - (batchSize * batchCount) : batchSize;
-						currentErrors = Layers[j].Backpropagate(currentErrors, LearningRate, DecayRate, Layers[j - 1].LayerOutputs, currentBatchLength, currentEpoch, Optimizer);
+						if(j > 0)
+							currentErrors = Layers[j].Backpropagate(currentErrors, LearningRate, DecayRate, Layers[j - 1].LayerOutputs, currentBatchLength, currentEpoch, Optimizer);
+						else
+							currentErrors = Layers[j].Backpropagate(currentErrors, LearningRate, DecayRate, Inputs, currentBatchLength, currentEpoch, Optimizer);
 					}
 					batchCount++;
 					currentErrors = new MatrixExtension(trainTargetsArray[0].Length, 1);

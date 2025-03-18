@@ -28,19 +28,20 @@ namespace MyMachineLearningLibrary.Optimizers
 		}
 		public void Compile(NeuralNetwork neuralNetwork)
 		{
-			M = new MatrixExtension[neuralNetwork.Layers.Count - 1];
-			V = new MatrixExtension[neuralNetwork.Layers.Count - 1];
+			M = new MatrixExtension[neuralNetwork.Layers.Count];
+			V = new MatrixExtension[neuralNetwork.Layers.Count];
 
-			for (int i = 1; i < neuralNetwork.Layers.Count; i++) // Do not include the input layer
+			for (int i = 0; i < neuralNetwork.Layers.Count; i++)
 			{
-				M[i - 1] = new MatrixExtension(neuralNetwork.Layers[i].Gradients.RowLength, neuralNetwork.Layers[i].Gradients.ColoumnLength);
-				V[i - 1] = new MatrixExtension(neuralNetwork.Layers[i].Gradients.RowLength, neuralNetwork.Layers[i].Gradients.ColoumnLength);
+				M[i] = new MatrixExtension(neuralNetwork.Layers[i].Gradients.RowLength, neuralNetwork.Layers[i].Gradients.ColoumnLength);
+				V[i] = new MatrixExtension(neuralNetwork.Layers[i].Gradients.RowLength, neuralNetwork.Layers[i].Gradients.ColoumnLength);
 			}
 		}
 		public MatrixExtension OptimizeGradients(MatrixExtension gradients, double learningRate, double decayRate, int currentEpoch, int layerIndex)
 		{
-			int gradientsIndex = layerIndex - 1; // Since Input layer is not included
+			int gradientsIndex = layerIndex;
 
+			//Update First Momentum Weights
 			var t = gradients.Multiply(1 - Beta1);
 			M[gradientsIndex] = M[gradientsIndex].Multiply(Beta1).Add(t);
 

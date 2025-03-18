@@ -312,7 +312,7 @@ namespace MyMachineLearningLibrary
 			return result;
 		}
 
-        public MatrixExtension Transpose()
+		public MatrixExtension Transpose()
         {
 			var transposition = new MatrixExtension(ColoumnLength, RowLength);
 
@@ -344,7 +344,7 @@ namespace MyMachineLearningLibrary
             return result;
         }
 
-        public MatrixExtension Diagonal()
+		public MatrixExtension Diagonal()
         {
             var result = new MatrixExtension(RowLength, RowLength);
 

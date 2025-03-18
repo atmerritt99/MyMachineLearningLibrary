@@ -49,19 +49,20 @@ namespace MyMachineLearningLibrary.Layers
 			NumberOfPerceptrons = numberOfPerceptrons;
 			Perceptrons = new DensePerceptron[numberOfPerceptrons];
 			ActivationFunction = activationFunction;
+			Gradients = new MatrixExtension();
 		}
 
-		public MatrixExtension Backpropagate(MatrixExtension errors, double learningRate, double decayRate, MatrixExtension previousLayer, int batchSize, int currentEpoch, IOptimizer optimizer)
+		public MatrixExtension Backpropagate(MatrixExtension errors, double learningRate, double decayRate, MatrixExtension previousLayerOutputs, int batchSize, int currentEpoch, IOptimizer optimizer)
 		{
 			//Derivative of Softmax isn't used since that is implemented within the Categorical Cross Entropy Loss Function
 			Gradients = typeof(SoftmaxActivationFunction) == ActivationFunction.GetType() ? LayerOutputs : ActivationFunction.ActivateDerivativeOfFunction(LayerOutputs);
 
 			Gradients = Gradients.Multiply(errors);
-			Gradients = Gradients.Divide(batchSize);
+			//Gradients = Gradients.Divide(batchSize); // Commented out until batch descent is fixed
 
 			var x = optimizer.OptimizeGradients(Gradients, learningRate, decayRate, currentEpoch, LayerIndex);
 
-			var previousLayerTransposition = previousLayer.Transpose();
+			var previousLayerTransposition = previousLayerOutputs.Transpose();
 			var weightDeltas = x.DotProduct(previousLayerTransposition);
 
 			//Update the Weights and Biases With Gradient Descent Optimization
@@ -94,7 +95,7 @@ namespace MyMachineLearningLibrary.Layers
 			return LayerOutputs;
 		}
 
-		public void InitializeLayer(int numberOfPerceptronsInPreviousLayer, ILayer previousLayer, int layerIndex)
+		public void InitializeLayer(int numberOfPerceptronsInPreviousLayer, int layerIndex)
 		{
 			LayerIndex = layerIndex;
 
