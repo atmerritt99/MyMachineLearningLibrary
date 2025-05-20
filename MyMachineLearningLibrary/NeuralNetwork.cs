@@ -124,49 +124,35 @@ namespace MyMachineLearningLibrary
 		{
 			for (int currentEpoch = 1; currentEpoch <= numberOfEpochs; currentEpoch++)
 			{
-				int batchCount = 0;
-
 				var shuffledIndexes = Shuffle(trainInputsArray.Length); //Shuffle the indexes so that the inputs are given in a random order
-
 				double cost = 0; // The cost is the average of all the loss
-
 				double accuracy = 0;
 
-				var currentErrors = new MatrixExtension(trainTargetsArray[0].Length, 1);
-				for (int i = 0; i < trainInputsArray.Length; i++)
+				foreach (var index in shuffledIndexes) 
 				{
-					int k = shuffledIndexes[i];
-					var inputsArray = trainInputsArray[k];
-					var targetsArray = trainTargetsArray[k];
+					var inputsArray = trainInputsArray[index];
+					var targetsArray = trainTargetsArray[index];
 
 					var outputsArray = Predict(inputsArray);
-					var outputsMatrix = Layers.Last().LayerOutputs;
+					var outputMatrix = Layers.Last().Outputs;
 
 					// Calculate the errors
 					var targetsMatrix = new MatrixExtension(targetsArray);
-					currentErrors = currentErrors.Add(LossFunction.CalculateDerivativeOfLoss(targetsMatrix, outputsMatrix));
-					cost += LossFunction.CalculateLoss(targetsMatrix, outputsMatrix);
+					var errors = LossFunction.CalculateDerivativeOfLoss(targetsMatrix, outputMatrix);
+					cost += LossFunction.CalculateLoss(targetsMatrix, outputMatrix);
 
 					// Calculate the accuracy
 					var classifications = MakeClassification(outputsArray);
 					accuracy = TestClassification(classifications, targetsArray) ? accuracy + 1 : accuracy;
 
-					// Finish the batch before preceeding
-					// Using Stochasitic Gradient Descent until I fix batch learning
-					//if (!((i + 1) % batchSize == 0 || (i + 1) == trainInputsArray.Length))
-					//	continue;
-
 					// Backpropagate the errors
-					for (int j = Layers.Count - 1; j >= 0; j--)
+					for(int i = Layers.Count - 1; i >= 0; i--)
 					{
-						var currentBatchLength = (i + 1) == trainInputsArray.Length ? trainInputsArray.Length - (batchSize * batchCount) : batchSize;
-						if(j > 0)
-							currentErrors = Layers[j].Backpropagate(currentErrors, LearningRate, DecayRate, Layers[j - 1].LayerOutputs, currentBatchLength, currentEpoch, Optimizer);
+						if(i > 0)
+							errors = Layers[i].Backpropagate(errors, LearningRate, DecayRate, Layers[i - 1].Outputs, currentEpoch, Optimizer);
 						else
-							currentErrors = Layers[j].Backpropagate(currentErrors, LearningRate, DecayRate, Inputs, currentBatchLength, currentEpoch, Optimizer);
+							errors = Layers[i].Backpropagate(errors, LearningRate, DecayRate, Inputs, currentEpoch, Optimizer);
 					}
-					batchCount++;
-					currentErrors = new MatrixExtension(trainTargetsArray[0].Length, 1);
 				}
 
 				cost /= trainInputsArray.Length;

@@ -8,9 +8,9 @@ using MyMachineLearningLibrary.Weight_Initialization;
 
 /*
  TODO:
-	Rename variables, write better comments
-	Currently, Save and Load works by making all variables public methods, I should look into changing this
+	IMPLEMENT BATCH TRAINING CORRECTLY THIS TIME
 	Speed up matrix multiplication using parallel programming
+	Currently, Save and Load works by making all variables public methods, I should look into changing this
  */
 
 
@@ -18,11 +18,6 @@ using MyMachineLearningLibrary.Weight_Initialization;
 /*
  Create a ficticious dataset by randomly generating 10 numbers then classifying those numbers with a 0 if the sum would be less than .5 or 1 otherwise
  Split the dataset into a tarining and test set
-
-
-
-
-
  */
 
 const int SIZE_OF_DATA_SET = 1000;
@@ -72,7 +67,7 @@ nn.AddLayer(new DenseLayer(1, new SigmoidActivationFunction()));
 
 nn.Compile(new AdamOptimizer());
 
-nn.Train(200, trainingX, trainingY, 1, 1);
+nn.Train(200, trainingX, trainingY, 1, 5);
 
 nn.Save("test.json");
 
