@@ -32,11 +32,12 @@ namespace MyMachineLearningLibrary.Layers
 
 			}
 		}
-		public MatrixExtension Outputs
+
+		public MatrixExtension Biases
 		{
 			get
 			{
-				return ActivationFunction.ActivateFunction(new MatrixExtension(Perceptrons.Select(x => x.Output).ToArray()));
+				return new MatrixExtension(Perceptrons.Select(x => x.Bias).ToArray());
 			}
 			set
 			{
@@ -44,12 +45,15 @@ namespace MyMachineLearningLibrary.Layers
 			}
 		}
 
+		public MatrixExtension Outputs { get; set; }
+
 		public DenseLayer(int numberOfPerceptrons, IActivationFunction activationFunction)
 		{
 			NumberOfPerceptrons = numberOfPerceptrons;
 			Perceptrons = new DensePerceptron[numberOfPerceptrons];
 			ActivationFunction = activationFunction;
 			Gradients = new MatrixExtension();
+			Outputs = new MatrixExtension();
 		}
 
 		public MatrixExtension Backpropagate(MatrixExtension errors, double learningRate, double decayRate, MatrixExtension previousLayerOutputs, int currentEpoch, IOptimizer optimizer)
@@ -75,18 +79,12 @@ namespace MyMachineLearningLibrary.Layers
 				Perceptrons[i].Bias -= x[i, 0];
 			}
 
-			// Reset the Gradients after applying them
-			Gradients = new MatrixExtension(Gradients.RowLength, Gradients.ColoumnLength);
-
 			return TransposeWeights().DotProduct(errors);
 		}
 
 		public MatrixExtension FeedForward(MatrixExtension layerInputs)
 		{
-			for (int i = 0; i < Perceptrons.Length; i++)
-			{
-				Perceptrons[i].WeightedSum(layerInputs.Flatten());
-			}
+			Outputs = ActivationFunction.ActivateFunction(Weights.DotProduct(layerInputs).Add(Biases));
 			return Outputs;
 		}
 
@@ -99,6 +97,8 @@ namespace MyMachineLearningLibrary.Layers
 				Perceptrons[i] = new DensePerceptron(numberOfPerceptronsInPreviousLayer, ActivationFunction);
 			}
 
+			// Is here so Network can compile correctly
+			// See: Optimizer Compile Function
 			Gradients = new MatrixExtension(Perceptrons.Length, 1);
 		}
 

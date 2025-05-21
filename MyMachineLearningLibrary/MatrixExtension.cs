@@ -78,18 +78,18 @@ namespace MyMachineLearningLibrary
             ColoumnLength = coloumnLength;
         }
 
-        public MatrixExtension(double[] values)
-        {
-            Values = new double[values.Length][];
-            RowLength = values.Length;
-            ColoumnLength = 1;
+		public MatrixExtension(double[] values)
+		{
+			Values = new double[values.Length][];
+			RowLength = values.Length;
+			ColoumnLength = 1;
 
-            for (int i = 0; i < RowLength; i++)
-            {
-                Values[i] = new double[1];
-                Values[i][0] = values[i];
-            }
-        }
+			for (int i = 0; i < RowLength; i++)
+			{
+				Values[i] = new double[1];
+				Values[i][0] = values[i];
+			}
+		}
 
 		public MatrixExtension Multiply(double x)
         {
