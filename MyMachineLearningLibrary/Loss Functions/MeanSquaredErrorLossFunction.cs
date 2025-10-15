@@ -20,7 +20,6 @@ namespace MyMachineLearningLibrary.Loss_Functions
 		{
 			var derivativeOfLossMatrix = targets.Subtract(outputs);
 			derivativeOfLossMatrix = derivativeOfLossMatrix.Multiply(-2);
-			derivativeOfLossMatrix = derivativeOfLossMatrix.Divide(targets.RowLength);
 			return derivativeOfLossMatrix;
 		}
 	}

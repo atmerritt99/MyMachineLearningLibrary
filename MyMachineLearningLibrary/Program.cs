@@ -61,13 +61,13 @@ for (int i = 0; i < SIZE_OF_DATA_SET; i++)
 
 }
 
-var nn = new NeuralNetwork(NUMBER_OF_INPUTS, .001, 0, new BinaryCrossEntropyLossFunction());
+var nn = new NeuralNetwork(NUMBER_OF_INPUTS, .001, 0, new MeanSquaredErrorLossFunction());
 nn.AddLayer(new DenseLayer(256, new ReluActivationFunction(.01)));
 nn.AddLayer(new DenseLayer(1, new SigmoidActivationFunction()));
 
 nn.Compile(new AdamOptimizer());
 
-nn.Train(200, trainingX, trainingY, 1, 5);
+nn.Train(200, trainingX, trainingY, 2, 5);
 
 nn.Save("test.json");
 

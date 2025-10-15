@@ -88,6 +88,19 @@ namespace MyMachineLearningLibrary
 			return result.Flatten();
 		}
 
+		private MatrixExtension Predict(MatrixExtension inputsMatrix)
+		{
+			Inputs = inputsMatrix.Copy();
+			var result = inputsMatrix.Copy();
+
+			foreach (var layer in Layers)
+			{
+				result = layer.FeedForward(result);
+			}
+
+			return result;
+		}
+
 		private int[] MakeClassification(double[] predictions)
 		{
 			var result = new int[predictions.Length];
@@ -120,30 +133,48 @@ namespace MyMachineLearningLibrary
 			return MakeClassification(predictions);
 		}
 
-		public void Train(int numberOfEpochs, double[][] trainInputsArray, double[][] trainTargetsArray, int batchSize = 1 /*Stochastic Gradient Descent by default*/, int reportingRate = 1)
+		public void Train(int numberOfEpochs, double[][] trainInputsArrays, double[][] trainTargetsArrays, int batchSize = 1 /*Stochastic Gradient Descent by default*/, int reportingRate = 1)
 		{
+			//Prepare Data
+			var trainInputsMatrix = new MatrixExtension(trainInputsArrays);
+			var trainTargetsMatrix = new MatrixExtension(trainTargetsArrays);
+
+			//Create Batches
+			var trainInputsBatches = new List<MatrixExtension>();
+			var trainTargetsBatches = new List<MatrixExtension>();
+
+			for(int i = 0; i < trainInputsMatrix.RowLength; i+=batchSize)
+			{
+				int numberOfRows = batchSize;
+
+				if(i + batchSize >= trainInputsMatrix.RowLength)
+				{
+					numberOfRows = trainInputsMatrix.RowLength - i;
+				}
+
+				trainInputsBatches.Add(trainInputsMatrix.GetRows(i, numberOfRows));
+				trainTargetsBatches.Add(trainTargetsMatrix.GetRows(i, numberOfRows));
+			}
+
 			for (int currentEpoch = 1; currentEpoch <= numberOfEpochs; currentEpoch++)
 			{
-				var shuffledIndexes = Shuffle(trainInputsArray.Length); //Shuffle the indexes so that the inputs are given in a random order
+				var shuffledIndexes = Shuffle(trainInputsBatches.Count); //Shuffle the indexes so that the inputs are given in a random order
 				double cost = 0; // The cost is the average of all the loss
 				double accuracy = 0;
 
 				foreach (var index in shuffledIndexes) 
 				{
-					var inputsArray = trainInputsArray[index];
-					var targetsArray = trainTargetsArray[index];
-
-					var outputsArray = Predict(inputsArray);
+					var outputsArray = Predict(trainInputsMatrix[index]);
 					var outputMatrix = Layers.Last().Outputs;
 
 					// Calculate the errors
-					var targetsMatrix = new MatrixExtension(targetsArray);
+					var targetsMatrix = new MatrixExtension(trainTargetsMatrix[index]);
 					var errors = LossFunction.CalculateDerivativeOfLoss(targetsMatrix, outputMatrix);
 					cost += LossFunction.CalculateLoss(targetsMatrix, outputMatrix);
 
 					// Calculate the accuracy
 					var classifications = MakeClassification(outputsArray);
-					accuracy = TestClassification(classifications, targetsArray) ? accuracy + 1 : accuracy;
+					accuracy = TestClassification(classifications, trainTargetsMatrix[index]) ? accuracy + 1 : accuracy;
 
 					// Backpropagate the errors
 					for(int i = Layers.Count - 1; i >= 0; i--)
@@ -155,8 +186,8 @@ namespace MyMachineLearningLibrary
 					}
 				}
 
-				cost /= trainInputsArray.Length;
-				accuracy /= trainInputsArray.Length;
+				cost /= trainInputsBatches.Count;
+				accuracy /= trainInputsBatches.Count;
 
 				if (reportingRate > 0 && currentEpoch % reportingRate == 0)
 					Console.WriteLine($"EPOCH: {currentEpoch}\tCOST: {cost}\tTRAIN ACCURACY: {accuracy}");

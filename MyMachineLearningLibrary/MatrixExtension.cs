@@ -52,7 +52,20 @@ namespace MyMachineLearningLibrary
             }
         }
 
-        public double Max
+		public double[] this[int r]
+		{
+			get
+			{
+				return Values[r];
+			}
+
+			set
+			{
+				Values[r] = value;
+			}
+		}
+
+		public double Max
         {
             get
             {
@@ -88,6 +101,18 @@ namespace MyMachineLearningLibrary
 			{
 				Values[i] = new double[1];
 				Values[i][0] = values[i];
+			}
+		}
+
+		public MatrixExtension(double[][] values)
+		{
+			Values = new double[values.Length][];
+			RowLength = values.Length;
+			ColoumnLength = values[0].Length;
+
+			for (int i = 0; i < RowLength; i++)
+			{
+				Values[i] = values[i];
 			}
 		}
 
@@ -368,5 +393,15 @@ namespace MyMachineLearningLibrary
             }
             return copy;
         }
-    }
+
+		public MatrixExtension GetRows(int start, int numberOfRows)
+		{
+			var result = new MatrixExtension(numberOfRows, ColoumnLength);
+			for(int i = start; i < start + numberOfRows; i++)
+			{
+				result.Values[i - start] = Values[i];
+			}
+			return result;
+		}
+	}
 }
