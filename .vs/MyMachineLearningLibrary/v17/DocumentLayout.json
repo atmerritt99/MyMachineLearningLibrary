@@ -3,40 +3,32 @@
   "WorkspaceRootPath": "D:\\source\\MyMachineLearningLibrary\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|d:\\source\\mymachinelearninglibrary\\mymachinelearninglibrary\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|solutionrelative:mymachinelearninglibrary\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|d:\\source\\mymachinelearninglibrary\\mymachinelearninglibrary\\neuralnetwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|solutionrelative:mymachinelearninglibrary\\neuralnetwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|d:\\source\\mymachinelearninglibrary\\mymachinelearninglibrary\\loss functions\\binarycrossentropylossfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|solutionrelative:mymachinelearninglibrary\\loss functions\\binarycrossentropylossfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|d:\\source\\mymachinelearninglibrary\\mymachinelearninglibrary\\loss functions\\categoricalcrossentropylossfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|solutionrelative:mymachinelearninglibrary\\loss functions\\categoricalcrossentropylossfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|d:\\source\\mymachinelearninglibrary\\mymachinelearninglibrary\\loss functions\\meanabsoluteerrorlossfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|solutionrelative:mymachinelearninglibrary\\loss functions\\meanabsoluteerrorlossfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|d:\\source\\mymachinelearninglibrary\\mymachinelearninglibrary\\loss functions\\meansquarederrorlossfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|solutionrelative:mymachinelearninglibrary\\loss functions\\meansquarederrorlossfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|d:\\source\\mymachinelearninglibrary\\mymachinelearninglibrary\\matrixextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|solutionrelative:mymachinelearninglibrary\\matrixextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|d:\\source\\mymachinelearninglibrary\\mymachinelearninglibrary\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|solutionrelative:mymachinelearninglibrary\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|d:\\source\\mymachinelearninglibrary\\mymachinelearninglibrary\\layers\\denselayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|solutionrelative:mymachinelearninglibrary\\layers\\denselayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|d:\\source\\mymachinelearninglibrary\\mymachinelearninglibrary\\optimizers\\adamoptimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|solutionrelative:mymachinelearninglibrary\\optimizers\\adamoptimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|d:\\source\\mymachinelearninglibrary\\mymachinelearninglibrary\\matrixextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|solutionrelative:mymachinelearninglibrary\\matrixextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|d:\\source\\mymachinelearninglibrary\\mymachinelearninglibrary\\loss functions\\meansquarederrorlossfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|solutionrelative:mymachinelearninglibrary\\loss functions\\meansquarederrorlossfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|d:\\source\\mymachinelearninglibrary\\mymachinelearninglibrary\\activation functions\\sigmoidactivationfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|solutionrelative:mymachinelearninglibrary\\activation functions\\sigmoidactivationfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|d:\\source\\mymachinelearninglibrary\\mymachinelearninglibrary\\optimizers\\gradientdescentoptimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|solutionrelative:mymachinelearninglibrary\\optimizers\\gradientdescentoptimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{98E5A36E-7128-4209-9F0E-1F6C91D5464A}|MyMachineLearningLibrary\\MyMachineLearningLibrary.csproj|d:\\source\\mymachinelearninglibrary\\mymachinelearninglibrary\\layers\\ilayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,105 +50,85 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MeanAbsoluteErrorLossFunction.cs",
-              "DocumentMoniker": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Loss Functions\\MeanAbsoluteErrorLossFunction.cs",
-              "RelativeDocumentMoniker": "MyMachineLearningLibrary\\Loss Functions\\MeanAbsoluteErrorLossFunction.cs",
-              "ToolTip": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Loss Functions\\MeanAbsoluteErrorLossFunction.cs",
-              "RelativeToolTip": "MyMachineLearningLibrary\\Loss Functions\\MeanAbsoluteErrorLossFunction.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAdAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "GradientDescentOptimizer.cs",
+              "DocumentMoniker": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Optimizers\\GradientDescentOptimizer.cs",
+              "RelativeDocumentMoniker": "MyMachineLearningLibrary\\Optimizers\\GradientDescentOptimizer.cs",
+              "ToolTip": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Optimizers\\GradientDescentOptimizer.cs",
+              "RelativeToolTip": "MyMachineLearningLibrary\\Optimizers\\GradientDescentOptimizer.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAswA8AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T02:30:26.089Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CategoricalCrossEntropyLossFunction.cs",
-              "DocumentMoniker": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Loss Functions\\CategoricalCrossEntropyLossFunction.cs",
-              "RelativeDocumentMoniker": "MyMachineLearningLibrary\\Loss Functions\\CategoricalCrossEntropyLossFunction.cs",
-              "ToolTip": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Loss Functions\\CategoricalCrossEntropyLossFunction.cs",
-              "RelativeToolTip": "MyMachineLearningLibrary\\Loss Functions\\CategoricalCrossEntropyLossFunction.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T02:30:18.419Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "BinaryCrossEntropyLossFunction.cs",
-              "DocumentMoniker": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Loss Functions\\BinaryCrossEntropyLossFunction.cs",
-              "RelativeDocumentMoniker": "MyMachineLearningLibrary\\Loss Functions\\BinaryCrossEntropyLossFunction.cs",
-              "ToolTip": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Loss Functions\\BinaryCrossEntropyLossFunction.cs",
-              "RelativeToolTip": "MyMachineLearningLibrary\\Loss Functions\\BinaryCrossEntropyLossFunction.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABLAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T02:29:25.694Z"
+              "WhenOpened": "2025-11-25T20:57:30.572Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "SigmoidActivationFunction.cs",
+              "DocumentMoniker": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Activation Functions\\SigmoidActivationFunction.cs",
+              "RelativeDocumentMoniker": "MyMachineLearningLibrary\\Activation Functions\\SigmoidActivationFunction.cs",
+              "ToolTip": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Activation Functions\\SigmoidActivationFunction.cs",
+              "RelativeToolTip": "MyMachineLearningLibrary\\Activation Functions\\SigmoidActivationFunction.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-25T20:50:39.239Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "MeanSquaredErrorLossFunction.cs",
               "DocumentMoniker": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Loss Functions\\MeanSquaredErrorLossFunction.cs",
               "RelativeDocumentMoniker": "MyMachineLearningLibrary\\Loss Functions\\MeanSquaredErrorLossFunction.cs",
               "ToolTip": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Loss Functions\\MeanSquaredErrorLossFunction.cs",
               "RelativeToolTip": "MyMachineLearningLibrary\\Loss Functions\\MeanSquaredErrorLossFunction.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAADAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAwwBMAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-01T05:27:00.747Z"
+              "WhenOpened": "2025-11-25T20:45:03.241Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "AdamOptimizer.cs",
-              "DocumentMoniker": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Optimizers\\AdamOptimizer.cs",
-              "RelativeDocumentMoniker": "MyMachineLearningLibrary\\Optimizers\\AdamOptimizer.cs",
-              "ToolTip": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Optimizers\\AdamOptimizer.cs",
-              "RelativeToolTip": "MyMachineLearningLibrary\\Optimizers\\AdamOptimizer.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAtwC0AAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-21T03:53:27.856Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "NeuralNetwork.cs",
               "DocumentMoniker": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\NeuralNetwork.cs",
               "RelativeDocumentMoniker": "MyMachineLearningLibrary\\NeuralNetwork.cs",
               "ToolTip": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\NeuralNetwork.cs",
               "RelativeToolTip": "MyMachineLearningLibrary\\NeuralNetwork.cs",
-              "ViewState": "AgIAAFEAAAAAAAAAAAAawKsAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAHkAAAAAAAAAAAAIwLMAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-21T03:50:23.941Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Program.cs",
               "RelativeDocumentMoniker": "MyMachineLearningLibrary\\Program.cs",
               "ToolTip": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Program.cs",
               "RelativeToolTip": "MyMachineLearningLibrary\\Program.cs",
-              "ViewState": "AgIAAFoAAAAAAAAAAADwv3UAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-21T03:42:32.262Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "MatrixExtension.cs",
               "DocumentMoniker": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\MatrixExtension.cs",
               "RelativeDocumentMoniker": "MyMachineLearningLibrary\\MatrixExtension.cs",
               "ToolTip": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\MatrixExtension.cs",
               "RelativeToolTip": "MyMachineLearningLibrary\\MatrixExtension.cs",
-              "ViewState": "AgIAAHsBAAAAAAAAAAAtwIwBAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD8BAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-21T03:33:18.945Z"
+              "WhenOpened": "2025-05-21T03:33:18.945Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 7,
               "Title": "ILayer.cs",
               "DocumentMoniker": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Layers\\ILayer.cs",
               "RelativeDocumentMoniker": "MyMachineLearningLibrary\\Layers\\ILayer.cs",
@@ -164,19 +136,21 @@
               "RelativeToolTip": "MyMachineLearningLibrary\\Layers\\ILayer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-20T17:40:18.268Z"
+              "WhenOpened": "2025-05-20T17:40:18.268Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
               "Title": "DenseLayer.cs",
               "DocumentMoniker": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Layers\\DenseLayer.cs",
               "RelativeDocumentMoniker": "MyMachineLearningLibrary\\Layers\\DenseLayer.cs",
               "ToolTip": "D:\\source\\MyMachineLearningLibrary\\MyMachineLearningLibrary\\Layers\\DenseLayer.cs",
               "RelativeToolTip": "MyMachineLearningLibrary\\Layers\\DenseLayer.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAA4wEQAAAA/AAAAAAAAAA==",
+              "ViewState": "AgIAADIAAAAAAAAAAAAAwAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T20:43:13.566Z"
+              "WhenOpened": "2025-03-23T20:43:13.566Z",
+              "EditorCaption": ""
             }
           ]
         }

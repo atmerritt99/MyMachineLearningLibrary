@@ -1,6 +1,8 @@
 ﻿using MyMachineLearningLibrary.Activation_Functions;
 using MyMachineLearningLibrary.Optimizers;
 using MyMachineLearningLibrary.Perceptrons;
+using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Double;
 using System;
 using System.Collections.Generic;
 using System.Linq;

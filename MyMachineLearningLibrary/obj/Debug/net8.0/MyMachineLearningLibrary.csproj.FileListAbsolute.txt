@@ -16,3 +16,4 @@ D:\source\MyMachineLearningLibrary\MyMachineLearningLibrary\obj\Debug\net8.0\ref
 D:\source\MyMachineLearningLibrary\MyMachineLearningLibrary\obj\Debug\net8.0\MyMachineLearningLibrary.pdb
 D:\source\MyMachineLearningLibrary\MyMachineLearningLibrary\obj\Debug\net8.0\MyMachineLearningLibrary.genruntimeconfig.cache
 D:\source\MyMachineLearningLibrary\MyMachineLearningLibrary\obj\Debug\net8.0\ref\MyMachineLearningLibrary.dll
+D:\source\MyMachineLearningLibrary\MyMachineLearningLibrary\bin\Debug\net8.0\MathNet.Numerics.dll

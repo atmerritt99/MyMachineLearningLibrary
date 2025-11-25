@@ -10,6 +10,19 @@
         "runtime": {
           "lib/net8.0/InterfaceConverter.dll": {}
         }
+      },
+      "MathNet.Numerics/5.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/MathNet.Numerics.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/MathNet.Numerics.dll": {
+            "related": ".xml"
+          }
+        }
       }
     }
   },
@@ -31,11 +44,34 @@
         "lib/netstandard2.1/InterfaceConverter.dll",
         "readme.md"
       ]
+    },
+    "MathNet.Numerics/5.0.0": {
+      "sha512": "pg1W2VwaEQMAiTpGK840hZgzavnqjlCMTVSbtVCXVyT+7AX4mc1o89SPv4TBlAjhgCOo9c1Y+jZ5m3ti2YgGgA==",
+      "type": "package",
+      "path": "mathnet.numerics/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net461/MathNet.Numerics.dll",
+        "lib/net461/MathNet.Numerics.xml",
+        "lib/net48/MathNet.Numerics.dll",
+        "lib/net48/MathNet.Numerics.xml",
+        "lib/net5.0/MathNet.Numerics.dll",
+        "lib/net5.0/MathNet.Numerics.xml",
+        "lib/net6.0/MathNet.Numerics.dll",
+        "lib/net6.0/MathNet.Numerics.xml",
+        "lib/netstandard2.0/MathNet.Numerics.dll",
+        "lib/netstandard2.0/MathNet.Numerics.xml",
+        "mathnet.numerics.5.0.0.nupkg.sha512",
+        "mathnet.numerics.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "InterfaceConverter.SystemTextJson >= 1.3.2"
+      "InterfaceConverter.SystemTextJson >= 1.3.2",
+      "MathNet.Numerics >= 5.0.0"
     ]
   },
   "packageFolders": {
@@ -93,6 +129,10 @@
           "InterfaceConverter.SystemTextJson": {
             "target": "Package",
             "version": "[1.3.2, )"
+          },
+          "MathNet.Numerics": {
+            "target": "Package",
+            "version": "[5.0.0, )"
           }
         },
         "imports": [
@@ -111,7 +151,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

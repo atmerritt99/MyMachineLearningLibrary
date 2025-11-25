@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MyMachineLearningLibrary")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+420e9c979a304aa3af20cd6ffca55e831ab2e5f7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b103b2818467726c3a4887e4790e876c526f7f9")]
 [assembly: System.Reflection.AssemblyProductAttribute("MyMachineLearningLibrary")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MyMachineLearningLibrary")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
