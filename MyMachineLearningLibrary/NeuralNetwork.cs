@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.Json;
-using MyMachineLearningLibrary.Activation_Functions;
-using MyMachineLearningLibrary.Optimizers;
+﻿using MyMachineLearningLibrary.Activation_Functions;
 using MyMachineLearningLibrary.Layers;
 using MyMachineLearningLibrary.Loss_Functions;
+using MyMachineLearningLibrary.Optimizers;
 using MyMachineLearningLibrary.Weight_Initialization;
-using System.Diagnostics;
+using System.Text.Json;
 
 namespace MyMachineLearningLibrary
 {

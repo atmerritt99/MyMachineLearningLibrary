@@ -1,12 +1,8 @@
-﻿using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Double;
-using MyMachineLearningLibrary;
+﻿using MyMachineLearningLibrary;
 using MyMachineLearningLibrary.Activation_Functions;
 using MyMachineLearningLibrary.Layers;
 using MyMachineLearningLibrary.Loss_Functions;
 using MyMachineLearningLibrary.Optimizers;
-using MyMachineLearningLibrary.Weight_Initialization;
-using System.Diagnostics;
 
 /*
  TODO:
@@ -15,18 +11,6 @@ using System.Diagnostics;
 	Currently, Save and Load works by making all variables public methods, I should look into changing this
  */
 
-Matrix<double> A = DenseMatrix.OfArray(new double[,] {
-		{1,1,1,1},
-		{1,2,3,4},
-		{4,3,2,1}});
-
-Matrix<double> B = DenseMatrix.OfArray(new double[,] {
-		{1,1,1},
-		{1,2,3},
-		{4,3,2},
-		{4,3,2}});
-
-var c = A.Multiply(B);
 /*
  Create a ficticious dataset by randomly generating 10 numbers then classifying those numbers with a 0 if the sum would be less than .5 or 1 otherwise
  Split the dataset into a tarining and test set
