@@ -3,6 +3,7 @@ using MyMachineLearningLibrary.Activation_Functions;
 using MyMachineLearningLibrary.Layers;
 using MyMachineLearningLibrary.Loss_Functions;
 using MyMachineLearningLibrary.Optimizers;
+using MyMachineLearningLibrary.Weight_Initialization;
 
 /*
  TODO:
@@ -16,110 +17,108 @@ using MyMachineLearningLibrary.Optimizers;
  Split the dataset into a tarining and test set
  */
 
-const int SIZE_OF_DATA_SET = 1000;
-const int SIZE_OF_TRAINING_DATA = (int)(SIZE_OF_DATA_SET * .8);
-const int SIZE_OF_TESTING_DATA = SIZE_OF_DATA_SET - SIZE_OF_TRAINING_DATA;
+//const int SIZE_OF_DATA_SET = 10000;
+//const int SIZE_OF_TRAINING_DATA = (int)(SIZE_OF_DATA_SET * .8);
+//const int SIZE_OF_TESTING_DATA = SIZE_OF_DATA_SET - SIZE_OF_TRAINING_DATA;
 
-const int NUMBER_OF_INPUTS = 5;
+//const int NUMBER_OF_INPUTS = 5;
 
-var trainingX = new double[SIZE_OF_TRAINING_DATA][];
-var trainingY = new double[SIZE_OF_TRAINING_DATA][];
-var testingX = new double[SIZE_OF_TESTING_DATA][];
-var testingY = new double[SIZE_OF_TESTING_DATA][];
-var rng = new Random();
+//var trainingX = new double[SIZE_OF_TRAINING_DATA][];
+//var trainingY = new double[SIZE_OF_TRAINING_DATA][];
+//var testingX = new double[SIZE_OF_TESTING_DATA][];
+//var testingY = new double[SIZE_OF_TESTING_DATA][];
+//var rng = new Random();
 
-for (int i = 0; i < SIZE_OF_DATA_SET; i++)
+//for (int i = 0; i < SIZE_OF_DATA_SET; i++)
+//{
+//	if (i < SIZE_OF_DATA_SET * .8)
+//	{
+//		trainingX[i] = new double[NUMBER_OF_INPUTS];
+
+//		for (int j = 0; j < NUMBER_OF_INPUTS; j++)
+//		{
+//			trainingX[i][j] = rng.NextDouble();
+//		}
+
+//		trainingY[i] = new double[1];
+//		trainingY[i][0] = trainingX[i].Sum() < NUMBER_OF_INPUTS / 2.0 ? 0 : 1;
+//	}
+//	else
+//	{
+//		testingX[i - SIZE_OF_TRAINING_DATA] = new double[NUMBER_OF_INPUTS];
+
+//		for (int j = 0; j < NUMBER_OF_INPUTS; j++)
+//		{
+//			testingX[i - SIZE_OF_TRAINING_DATA][j] = rng.NextDouble();
+//		}
+
+//		testingY[i - SIZE_OF_TRAINING_DATA] = new double[1];
+//		testingY[i - SIZE_OF_TRAINING_DATA][0] = testingX[i - SIZE_OF_TRAINING_DATA].Sum() < NUMBER_OF_INPUTS / 2.0 ? 0 : 1;
+//	}
+
+//}
+
+//var nn = new NeuralNetwork(NUMBER_OF_INPUTS, .001, 0, new MeanSquaredErrorLossFunction(), new UniformXavierWeightInitialization(), new AdamOptimizer());
+//nn.AddLayer(new DenseLayer(256, new ReluActivationFunction(.01)));
+//nn.AddLayer(new DenseLayer(1, new SigmoidActivationFunction()));
+
+//nn.Train(25, trainingX, trainingY, 32, 1);
+
+//nn.Save("test.json");
+
+//var nn2 = NeuralNetwork.Load("test.json");
+//var accuracy = nn2.Test(testingX, testingY);
+
+//Console.WriteLine($"Test Accuracy: {accuracy}");
+
+var trainingData = MnistReader.ReadTrainingData().ToArray();
+double[][] trainInputs = new double[trainingData.Length][];
+double[][] trainTargets = new double[trainingData.Length][];
+
+for (int i = 0; i < trainingData.Length; i++)
 {
-	if (i < SIZE_OF_DATA_SET * .8)
+	trainInputs[i] = new double[trainingData[i].Data.Length];
+	int j = 0;
+	foreach (var pixel in trainingData[i].Data)
 	{
-		trainingX[i] = new double[NUMBER_OF_INPUTS];
-
-		for (int j = 0; j < NUMBER_OF_INPUTS; j++)
-		{
-			trainingX[i][j] = rng.NextDouble();
-		}
-
-		trainingY[i] = new double[1];
-		trainingY[i][0] = trainingX[i].Sum() < NUMBER_OF_INPUTS / 2.0 ? 0 : 1;
+		trainInputs[i][j] = pixel / 255.0;
+		j++;
 	}
-	else
-	{
-		testingX[i - SIZE_OF_TRAINING_DATA] = new double[NUMBER_OF_INPUTS];
-
-		for (int j = 0; j < NUMBER_OF_INPUTS; j++)
-		{
-			testingX[i - SIZE_OF_TRAINING_DATA][j] = rng.NextDouble();
-		}
-
-		testingY[i - SIZE_OF_TRAINING_DATA] = new double[1];
-		testingY[i - SIZE_OF_TRAINING_DATA][0] = testingX[i - SIZE_OF_TRAINING_DATA].Sum() < NUMBER_OF_INPUTS / 2.0 ? 0 : 1;
-	}
-
+	trainTargets[i] = new double[10];
+	trainTargets[i][trainingData[i].Label] = 1;
 }
 
-var nn = new NeuralNetwork(NUMBER_OF_INPUTS, .001, 0, new MeanSquaredErrorLossFunction());
-nn.AddLayer(new DenseLayer(256, new ReluActivationFunction(.01)));
-nn.AddLayer(new DenseLayer(1, new SigmoidActivationFunction()));
+var testData = MnistReader.ReadTestData().ToArray();
+double[][] testingInputs = new double[testData.Length][];
+double[][] testTargets = new double[testData.Length][];
 
-nn.Compile(new AdamOptimizer());
+for (int i = 0; i < testData.Length; i++)
+{
+	testingInputs[i] = new double[testData[i].Data.Length];
+	int j = 0;
+	foreach (var pixel in testData[i].Data)
+	{
+		testingInputs[i][j] = pixel / 255.0;
+		j++;
+	}
+	testTargets[i] = new double[10];
+	testTargets[i][testData[i].Label] = 1;
+}
 
-nn.Train(200, trainingX, trainingY, 1, 5);
+var nn = new NeuralNetwork(784, .001, 0, new MeanSquaredErrorLossFunction(), new UniformXavierWeightInitialization(), new GradientDescentOptimizer());
 
-nn.Save("test.json");
+for (int i = 0; i < 1; i++)
+	nn.AddLayer(new DenseLayer(32, new ReluActivationFunction()));
 
-var nn2 = NeuralNetwork.Load("test.json");
-var accuracy = nn2.Test(testingX, testingY);
+nn.AddLayer(new DenseLayer(10, new SigmoidActivationFunction()));
 
-Console.WriteLine($"Test Accuracy: {accuracy}");
+nn.Train(5, trainInputs, trainTargets, 128, 1);
 
-//var trainingData = MnistReader.ReadTrainingData().ToArray();
-//double[][] trainInputs = new double[trainingData.Length][];
-//double[][] trainTargets = new double[trainingData.Length][];
+var accuracy = nn.Test(testingInputs, testTargets);
 
-//for (int i = 0; i < trainingData.Length; i++)
-//{
-//	trainInputs[i] = new double[trainingData[i].Data.Length];
-//	int j = 0;
-//	foreach (var pixel in trainingData[i].Data)
-//	{
-//		trainInputs[i][j] = pixel / 255.0;
-//		j++;
-//	}
-//	trainTargets[i] = new double[10];
-//	trainTargets[i][trainingData[i].Label] = 1;
-//}
+Console.WriteLine("Model Accuracy: " + accuracy.ToString());
 
-//var testData = MnistReader.ReadTestData().ToArray();
-//double[][] testingInputs = new double[testData.Length][];
-//double[][] testTargets = new double[testData.Length][];
-
-//for (int i = 0; i < testData.Length; i++)
-//{
-//	testingInputs[i] = new double[testData[i].Data.Length];
-//	int j = 0;
-//	foreach (var pixel in testData[i].Data)
-//	{
-//		testingInputs[i][j] = pixel / 255.0;
-//		j++;
-//	}
-//	testTargets[i] = new double[10];
-//	testTargets[i][testData[i].Label] = 1;
-//}
-
-//var nn = new NeuralNetwork(784, .001, 0, new CategoricalCrossEntropyLossFunction());
-//nn.AddLayer(new DenseLayer(128, new ReluActivationFunction()));
-//nn.AddLayer(new DenseLayer(32, new ReluActivationFunction()));
-//nn.AddLayer(new DenseLayer(10, new SoftmaxActivationFunction()));
-
-//nn.Compile(new AdamOptimizer());
-
-//nn.Train(25, trainInputs, trainTargets, 128, 1);
-
-//var accuracy = nn.Test(testingInputs, testTargets);
-
-//Console.WriteLine("Model Accuracy: " + accuracy.ToString());
-
-//nn.Save("MnistModel.json");
+nn.Save("MnistModel2.json");
 
 //int inputSize = 20000;
 

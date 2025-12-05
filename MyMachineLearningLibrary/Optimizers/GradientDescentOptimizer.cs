@@ -13,7 +13,7 @@ namespace MyMachineLearningLibrary.Optimizers
 
 		}
 
-		public MatrixExtension OptimizeGradients(MatrixExtension gradients, double learningRate, double decayRate, int currentEpoch, int layerIndex)
+		public MatrixExtension OptimizeGradients(MatrixExtension gradients, double learningRate, double decayRate, int currentEpoch, int layerIndex, int batchSize)
 		{
 			//Calculate Decay
 			var decay = currentEpoch / decayRate;

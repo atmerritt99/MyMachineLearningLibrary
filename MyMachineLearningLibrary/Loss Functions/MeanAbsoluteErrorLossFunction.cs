@@ -18,7 +18,7 @@ namespace MyMachineLearningLibrary.Loss_Functions
 			var lossMatrix = targets.Subtract(outputs);
 			lossMatrix = lossMatrix.AbsoluteValue();
 
-			return lossMatrix.Average;
+			return lossMatrix.RowAverage;
 		}
 	}
 }

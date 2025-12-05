@@ -37,8 +37,11 @@ namespace MyMachineLearningLibrary.Optimizers
 				V[i] = new MatrixExtension(neuralNetwork.Layers[i].Gradients.RowLength, neuralNetwork.Layers[i].Gradients.ColoumnLength);
 			}
 		}
-		public MatrixExtension OptimizeGradients(MatrixExtension gradients, double learningRate, double decayRate, int currentEpoch, int layerIndex)
+		public MatrixExtension OptimizeGradients(MatrixExtension gradients, double learningRate, double decayRate, int currentEpoch, int layerIndex, int batchSize)
 		{
+			M[layerIndex] = new MatrixExtension(M[layerIndex].RowLength, batchSize);
+			V[layerIndex] = new MatrixExtension(V[layerIndex].RowLength, batchSize);
+
 			int gradientsIndex = layerIndex;
 
 			//Update First Momentum Weights

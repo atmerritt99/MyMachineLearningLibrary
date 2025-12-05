@@ -65,7 +65,7 @@ namespace MyMachineLearningLibrary.Layers
 
 			Gradients = Gradients.Multiply(errors);
 
-			var x = optimizer.OptimizeGradients(Gradients, learningRate, decayRate, currentEpoch, LayerIndex);
+			var x = optimizer.OptimizeGradients(Gradients, learningRate, decayRate, currentEpoch, LayerIndex, Gradients.ColoumnLength);
 
 			var previousLayerTransposition = previousLayerOutputs.Transpose();
 			var weightDeltas = x.DotProduct(previousLayerTransposition);
@@ -86,7 +86,13 @@ namespace MyMachineLearningLibrary.Layers
 
 		public MatrixExtension FeedForward(MatrixExtension layerInputs)
 		{
-			Outputs = ActivationFunction.ActivateFunction(Weights.DotProduct(layerInputs).Add(Biases));
+			Outputs = ActivationFunction.ActivateFunction(Weights.DotProduct(layerInputs.Transpose()).AddToEachRow(Biases));
+			return Outputs;
+		}
+
+		public MatrixExtension FeedForward(MatrixExtension layerInputs, bool x)
+		{
+			Outputs = ActivationFunction.ActivateFunction(Weights.DotProduct(layerInputs).AddToEachRow(Biases));
 			return Outputs;
 		}
 

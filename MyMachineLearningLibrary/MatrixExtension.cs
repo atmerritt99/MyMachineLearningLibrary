@@ -31,6 +31,19 @@ namespace MyMachineLearningLibrary
             }
         }
 
+		public double RowAverage
+		{
+			get
+			{
+				double average = 0;
+				foreach (var row in Values)
+				{
+					average += row.Average();
+				}
+				return average / Values.Length;
+			}
+		}
+
 		public double Average
 		{
 			get
@@ -163,6 +176,19 @@ namespace MyMachineLearningLibrary
 				for (int j = 0; j < ColoumnLength; j++)
 				{
                     result[i, j] = Values[i][j] + m[i, j];
+				}
+			}
+			return result;
+		}
+
+		public MatrixExtension AddToEachRow(MatrixExtension m)
+		{
+			var result = new MatrixExtension(RowLength, ColoumnLength);
+			for (int i = 0; i < RowLength; i++)
+			{
+				for (int j = 0; j < ColoumnLength; j++)
+				{
+					result[i, j] = Values[i][j] + m[i, 0];
 				}
 			}
 			return result;

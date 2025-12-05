@@ -18,7 +18,7 @@ namespace MyMachineLearningLibrary.Loss_Functions
 		{
 			var targetsCopy = targets.Copy();
 			targetsCopy = targetsCopy.Multiply(outputs.Log());
-			return targetsCopy.Sum * -1;
+			return targetsCopy.Sum * -1 / targets.RowLength;
 		}
 	}
 }

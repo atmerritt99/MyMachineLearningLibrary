@@ -16,32 +16,32 @@ namespace MyMachineLearningLibrary
 		public int NumberOfInputs { get; set; }
 		public ILossFunction LossFunction { get; set; }
 		public MatrixExtension Inputs { get; set; }
+		public IWeightInitializtion WeightInitializtion { get; set; }
 		private NeuralNetwork()
 		{
 			Layers = new List<ILayer>();
 			LossFunction = new NotDefinedLossFunction();
 			Optimizer = new GradientDescentOptimizer();
 			Inputs = new MatrixExtension();
+			WeightInitializtion = new UniformXavierWeightInitialization();
 		}
 
-		public NeuralNetwork(int NumberOfInputs, double LearningRate, int DecayRate, ILossFunction LossFunction) 
+		public NeuralNetwork(int NumberOfInputs, double LearningRate, int DecayRate, ILossFunction LossFunction, IWeightInitializtion WeightInitializtion, IOptimizer Optimizer) 
 		{
-			//Layers = [new InputLayer(NumberOfInputs)];
 			Layers = [];
 			this.LearningRate = LearningRate;
 			this.NumberOfInputs = NumberOfInputs;
 			this.LossFunction = LossFunction;
 			this.DecayRate = DecayRate;
-			Optimizer = new GradientDescentOptimizer();
+			this.Optimizer = Optimizer;
 			Inputs = new MatrixExtension(NumberOfInputs, 1);
+			this.WeightInitializtion = WeightInitializtion;
 		}
 
-		public void Compile(IOptimizer optimizer, IWeightInitializtion? weightInitializtion = null)
+		private void Compile()
 		{
-			weightInitializtion ??= new UniformXavierWeightInitialization();
-			weightInitializtion.InitializeWeights(this);
-			this.Optimizer = optimizer;
-			optimizer.Compile(this);
+			WeightInitializtion.InitializeWeights(this);
+			Optimizer.Compile(this);
 		}
 
 		public void AddLayer(ILayer layer)
@@ -76,7 +76,7 @@ namespace MyMachineLearningLibrary
 
 			foreach(var layer in Layers)
 			{
-				result = layer.FeedForward(result);
+				result = layer.FeedForward(result, false);
 			}
 
 			return result.Flatten();
@@ -90,6 +90,7 @@ namespace MyMachineLearningLibrary
 			foreach (var layer in Layers)
 			{
 				result = layer.FeedForward(result);
+				result = result.Transpose();
 			}
 
 			return result;
@@ -129,46 +130,52 @@ namespace MyMachineLearningLibrary
 
 		public void Train(int numberOfEpochs, double[][] trainInputsArrays, double[][] trainTargetsArrays, int batchSize = 1 /*Stochastic Gradient Descent by default*/, int reportingRate = 1)
 		{
-			////Prepare Data
-			//var trainInputsMatrix = new MatrixExtension(trainInputsArrays);
-			//var trainTargetsMatrix = new MatrixExtension(trainTargetsArrays);
+			Compile();
 
-			////Create Batches
-			//var trainInputsBatches = new List<MatrixExtension>();
-			//var trainTargetsBatches = new List<MatrixExtension>();
+			//Prepare Data
+			var trainInputsMatrix = new MatrixExtension(trainInputsArrays);
+			var trainTargetsMatrix = new MatrixExtension(trainTargetsArrays);
 
-			//for(int i = 0; i < trainInputsMatrix.RowLength; i+=batchSize)
-			//{
-			//	int numberOfRows = batchSize;
+			//Create Batches
+			var trainInputsBatches = new List<MatrixExtension>();
+			var trainTargetsBatches = new List<MatrixExtension>();
 
-			//	if(i + batchSize >= trainInputsMatrix.RowLength)
-			//	{
-			//		numberOfRows = trainInputsMatrix.RowLength - i;
-			//	}
+			for (int i = 0; i < trainInputsMatrix.RowLength; i += batchSize)
+			{
+				int numberOfRows = batchSize;
 
-			//	trainInputsBatches.Add(trainInputsMatrix.GetRows(i, numberOfRows));
-			//	trainTargetsBatches.Add(trainTargetsMatrix.GetRows(i, numberOfRows));
-			//}
+				if (i + batchSize >= trainInputsMatrix.RowLength)
+				{
+					numberOfRows = trainInputsMatrix.RowLength - i;
+				}
+
+				trainInputsBatches.Add(trainInputsMatrix.GetRows(i, numberOfRows));
+				trainTargetsBatches.Add(trainTargetsMatrix.GetRows(i, numberOfRows));
+			}
 
 			for (int currentEpoch = 1; currentEpoch <= numberOfEpochs; currentEpoch++)
 			{
-				var shuffledIndexes = Shuffle(trainInputsArrays.Length); //Shuffle the indexes so that the inputs are given in a random order
+				var shuffledIndexes = Shuffle(trainInputsBatches.Count); //Shuffle the indexes so that the inputs are given in a random order
 				double cost = 0; // The cost is the average of all the loss
 				double accuracy = 0;
 
 				foreach (var index in shuffledIndexes) 
 				{
-					var outputsArray = Predict(trainInputsArrays[index]);
-					var outputMatrix = Layers.Last().Outputs;
+					var outputsMatrix = Predict(trainInputsBatches[index]);
 
 					// Calculate the errors
-					var targetsMatrix = new MatrixExtension(trainTargetsArrays[index]);
-					var errors = LossFunction.CalculateDerivativeOfLoss(targetsMatrix, outputMatrix);
-					cost += LossFunction.CalculateLoss(targetsMatrix, outputMatrix);
+					var targetsMatrix = trainTargetsBatches[index];
+					var errors = LossFunction.CalculateDerivativeOfLoss(targetsMatrix, outputsMatrix).Transpose();
+					cost += LossFunction.CalculateLoss(targetsMatrix, outputsMatrix);
 
 					// Calculate the accuracy
-					var classifications = MakeClassification(outputsArray);
-					accuracy = TestClassification(classifications, trainTargetsArrays[index]) ? accuracy + 1 : accuracy;
+					int counter = 0;
+					foreach(var output in outputsMatrix.Values)
+					{
+						var classification = MakeClassification(output);
+						accuracy = TestClassification(classification, targetsMatrix.Values[counter]) ? accuracy + 1 : accuracy;
+						counter += 1;
+					}
 
 					// Backpropagate the errors
 					for(int i = Layers.Count - 1; i >= 0; i--)
@@ -176,7 +183,7 @@ namespace MyMachineLearningLibrary
 						if(i > 0)
 							errors = Layers[i].Backpropagate(errors, LearningRate, DecayRate, Layers[i - 1].Outputs, currentEpoch, Optimizer);
 						else
-							errors = Layers[i].Backpropagate(errors, LearningRate, DecayRate, Inputs, currentEpoch, Optimizer);
+							errors = Layers[i].Backpropagate(errors, LearningRate, DecayRate, Inputs.Transpose(), currentEpoch, Optimizer);
 					}
 				}
 

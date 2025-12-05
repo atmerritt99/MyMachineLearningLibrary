@@ -11,6 +11,6 @@ namespace MyMachineLearningLibrary.Optimizers
 	public interface IOptimizer
 	{
 		void Compile(NeuralNetwork neuralNetwork);
-		MatrixExtension OptimizeGradients(MatrixExtension gradients, double learningRate, double decayRate, int currentEpoch, int layerIndex);
+		MatrixExtension OptimizeGradients(MatrixExtension gradients, double learningRate, double decayRate, int currentEpoch, int layerIndex, int batchSize);
 	}
 }
