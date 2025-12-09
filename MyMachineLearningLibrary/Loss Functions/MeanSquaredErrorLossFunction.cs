@@ -13,7 +13,7 @@ namespace MyMachineLearningLibrary.Loss_Functions
 			var lossMatrix = targets.Subtract(outputs);
 			lossMatrix = lossMatrix.Multiply(lossMatrix);
 
-			return lossMatrix.RowAverage;
+			return lossMatrix.RowSumOfAvg;
 		}
 
 		public MatrixExtension CalculateDerivativeOfLoss(MatrixExtension targets, MatrixExtension outputs)

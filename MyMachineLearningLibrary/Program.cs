@@ -85,7 +85,13 @@ for (int i = 0; i < trainingData.Length; i++)
 		j++;
 	}
 	trainTargets[i] = new double[10];
-	trainTargets[i][trainingData[i].Label] = 1;
+	for (int k = 0; k < trainTargets[i].Length; k++)
+	{
+		if (k == trainingData[i].Label)
+			trainTargets[i][k] = 1;
+		else
+			trainTargets[i][k] = -1;
+	}
 }
 
 var testData = MnistReader.ReadTestData().ToArray();
@@ -102,17 +108,20 @@ for (int i = 0; i < testData.Length; i++)
 		j++;
 	}
 	testTargets[i] = new double[10];
-	testTargets[i][testData[i].Label] = 1;
+	for (int k = 0; k < testTargets[i].Length; k++)
+	{
+		if (k == testData[i].Label)
+			testTargets[i][k] = 1;
+		else
+			testTargets[i][k] = -1;
+	}
 }
 
 var nn = new NeuralNetwork(784, .001, 0, new MeanSquaredErrorLossFunction(), new UniformXavierWeightInitialization(), new GradientDescentOptimizer());
+nn.AddLayer(new DenseLayer(32, new TanHActivationFunction()));
+nn.AddLayer(new DenseLayer(10, new TanHActivationFunction()));
 
-for (int i = 0; i < 1; i++)
-	nn.AddLayer(new DenseLayer(32, new ReluActivationFunction()));
-
-nn.AddLayer(new DenseLayer(10, new SigmoidActivationFunction()));
-
-nn.Train(5, trainInputs, trainTargets, 128, 1);
+nn.Train(2, trainInputs, trainTargets, 128, 1);
 
 var accuracy = nn.Test(testingInputs, testTargets);
 

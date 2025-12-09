@@ -31,16 +31,16 @@ namespace MyMachineLearningLibrary
             }
         }
 
-		public double RowAverage
+		public double RowSumOfAvg
 		{
 			get
 			{
-				double average = 0;
+				double sum = 0;
 				foreach (var row in Values)
 				{
-					average += row.Average();
+					sum += row.Average();
 				}
-				return average / Values.Length;
+				return sum;
 			}
 		}
 

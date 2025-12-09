@@ -114,6 +114,14 @@ namespace MyMachineLearningLibrary
 			int indexOfMaxValue = predictions.ToList().IndexOf(predictions.Max());
 			result[indexOfMaxValue] = 1;
 
+			for (int i = 0; i < result.Length; i++)
+			{
+				if (i != indexOfMaxValue)
+				{
+					result[i] = Layers.Last().ActivationFunction.MinClass;
+				}
+			}
+
 			return result;
 		}
 

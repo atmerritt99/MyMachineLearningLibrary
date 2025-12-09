@@ -26,7 +26,7 @@
 
 			lossMatrix = lossMatrix.Multiply(-1);
 
-			return lossMatrix.RowAverage;
+			return lossMatrix.RowSumOfAvg;
 		}
 	}
 }
