@@ -15,14 +15,12 @@ namespace MyMachineLearningLibrary
 		public int DecayRate { get; set; }
 		public int NumberOfInputs { get; set; }
 		public ILossFunction LossFunction { get; set; }
-		public MatrixExtension Inputs { get; set; }
 		public IWeightInitializtion WeightInitializtion { get; set; }
 		private NeuralNetwork()
 		{
 			Layers = new List<ILayer>();
 			LossFunction = new NotDefinedLossFunction();
 			Optimizer = new GradientDescentOptimizer();
-			Inputs = new MatrixExtension();
 			WeightInitializtion = new UniformXavierWeightInitialization();
 		}
 
@@ -34,7 +32,6 @@ namespace MyMachineLearningLibrary
 			this.LossFunction = LossFunction;
 			this.DecayRate = DecayRate;
 			this.Optimizer = Optimizer;
-			Inputs = new MatrixExtension(NumberOfInputs, 1);
 			this.WeightInitializtion = WeightInitializtion;
 		}
 
@@ -71,7 +68,6 @@ namespace MyMachineLearningLibrary
 		/// <returns>The output of the neural network</returns>
 		public double[] Predict(double[] inputsArray)
 		{
-			Inputs = new MatrixExtension(inputsArray);
 			var result = new MatrixExtension(inputsArray);
 
 			foreach(var layer in Layers)
@@ -84,7 +80,6 @@ namespace MyMachineLearningLibrary
 
 		private MatrixExtension Predict(MatrixExtension inputsMatrix)
 		{
-			Inputs = inputsMatrix.Copy();
 			var result = inputsMatrix.Copy();
 
 			foreach (var layer in Layers)
@@ -191,7 +186,7 @@ namespace MyMachineLearningLibrary
 						if(i > 0)
 							errors = Layers[i].Backpropagate(errors, LearningRate, DecayRate, Layers[i - 1].Outputs, currentEpoch, Optimizer);
 						else
-							errors = Layers[i].Backpropagate(errors, LearningRate, DecayRate, Inputs.Transpose(), currentEpoch, Optimizer);
+							errors = Layers[i].Backpropagate(errors, LearningRate, DecayRate, trainInputsBatches[index].Transpose(), currentEpoch, Optimizer);
 					}
 				}
 

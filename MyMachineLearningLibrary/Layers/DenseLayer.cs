@@ -65,10 +65,10 @@ namespace MyMachineLearningLibrary.Layers
 
 			Gradients = Gradients.Multiply(errors);
 
-			var x = optimizer.OptimizeGradients(Gradients, learningRate, decayRate, currentEpoch, LayerIndex, Gradients.ColoumnLength);
+			Gradients = optimizer.OptimizeGradients(Gradients, learningRate, decayRate, currentEpoch, LayerIndex, Gradients.ColoumnLength);
 
 			var previousLayerTransposition = previousLayerOutputs.Transpose();
-			var weightDeltas = x.DotProduct(previousLayerTransposition);
+			var weightDeltas = Gradients.DotProduct(previousLayerTransposition);
 
 			//Update the Weights and Biases With Gradient Descent Optimization
 			for (int i = 0; i < Perceptrons.Length; i++)
@@ -78,7 +78,7 @@ namespace MyMachineLearningLibrary.Layers
 					Perceptrons[i].Weights[j] -= weightDeltas[i, j];
 				}
 				//Bias deltas are the gradients passed through the optimizer
-				Perceptrons[i].Bias -= x[i, 0];
+				Perceptrons[i].Bias -= Gradients[i, 0];
 			}
 
 			return TransposeWeights().DotProduct(errors);
