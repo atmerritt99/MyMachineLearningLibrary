@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MyMachineLearningLibrary.Layers
 {
-	public class DenseLayer : ILayer
+	public class BinarizedDenseLayer : ILayer
 	{
 		public int LayerIndex { get; set; }
 		public int NumberOfPerceptrons { get; set; }
@@ -49,7 +49,7 @@ namespace MyMachineLearningLibrary.Layers
 
 		public MatrixExtension Outputs { get; set; }
 
-		public DenseLayer(int numberOfPerceptrons, IActivationFunction activationFunction)
+		public BinarizedDenseLayer(int numberOfPerceptrons, IActivationFunction activationFunction)
 		{
 			NumberOfPerceptrons = numberOfPerceptrons;
 			Perceptrons = new DensePerceptron[numberOfPerceptrons];
@@ -65,10 +65,10 @@ namespace MyMachineLearningLibrary.Layers
 
 			Gradients = Gradients.Multiply(errors);
 
-			Gradients = optimizer.OptimizeGradients(Gradients, learningRate, decayRate, currentEpoch, LayerIndex, Gradients.ColoumnLength);
+			var x = optimizer.OptimizeGradients(Gradients, learningRate, decayRate, currentEpoch, LayerIndex, Gradients.ColoumnLength);
 
 			var previousLayerTransposition = previousLayerOutputs.Transpose();
-			var weightDeltas = Gradients.DotProduct(previousLayerTransposition);
+			var weightDeltas = x.DotProduct(previousLayerTransposition);
 
 			//Update the Weights and Biases With Gradient Descent Optimization
 			for (int i = 0; i < Perceptrons.Length; i++)
@@ -78,7 +78,7 @@ namespace MyMachineLearningLibrary.Layers
 					Perceptrons[i].Weights[j] -= weightDeltas[i, j];
 				}
 				//Bias deltas are the gradients passed through the optimizer
-				Perceptrons[i].Bias -= Gradients[i, 0];
+				Perceptrons[i].Bias -= x[i, 0];
 			}
 
 			return TransposeWeights().DotProduct(errors);
@@ -87,13 +87,13 @@ namespace MyMachineLearningLibrary.Layers
 		public MatrixExtension TransposeInputsAndFeedForward(MatrixExtension layerInputs)
 		{
 			Outputs = ActivationFunction.ActivateFunction(Weights.DotProduct(layerInputs.Transpose()).AddToEachRow(Biases));
-			return Outputs;
+			return Outputs.Binarize();
 		}
 
 		public MatrixExtension FeedForward(MatrixExtension layerInputs)
 		{
 			Outputs = ActivationFunction.ActivateFunction(Weights.DotProduct(layerInputs).AddToEachRow(Biases));
-			return Outputs;
+			return Outputs.Binarize();
 		}
 
 		public void InitializeLayer(int numberOfPerceptronsInPreviousLayer, int layerIndex)

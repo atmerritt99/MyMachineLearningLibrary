@@ -71,6 +71,9 @@ using MyMachineLearningLibrary.Weight_Initialization;
 
 //Console.WriteLine($"Test Accuracy: {accuracy}");
 
+const double MNIST_PIXEL_MEAN = .1307;
+const double MNIST_PIXEL_STDDEV = .3081;
+
 var trainingData = MnistReader.ReadTrainingData().ToArray();
 double[][] trainInputs = new double[trainingData.Length][];
 double[][] trainTargets = new double[trainingData.Length][];
@@ -81,7 +84,7 @@ for (int i = 0; i < trainingData.Length; i++)
 	int j = 0;
 	foreach (var pixel in trainingData[i].Data)
 	{
-		trainInputs[i][j] = pixel / 255.0;
+		trainInputs[i][j] = ((pixel / 255.0) - MNIST_PIXEL_MEAN) / MNIST_PIXEL_STDDEV;
 		j++;
 	}
 	trainTargets[i] = new double[10];
@@ -104,7 +107,7 @@ for (int i = 0; i < testData.Length; i++)
 	int j = 0;
 	foreach (var pixel in testData[i].Data)
 	{
-		testingInputs[i][j] = pixel / 255.0;
+		testingInputs[i][j] = ((pixel / 255.0) - MNIST_PIXEL_MEAN) / MNIST_PIXEL_STDDEV;// >= 0 ? 1 : -1;
 		j++;
 	}
 	testTargets[i] = new double[10];
@@ -117,17 +120,15 @@ for (int i = 0; i < testData.Length; i++)
 	}
 }
 
-var nn = new NeuralNetwork(784, .001, 0, new MeanSquaredErrorLossFunction(), new UniformXavierWeightInitialization(), new GradientDescentOptimizer());
-nn.AddLayer(new DenseLayer(32, new TanHActivationFunction()));
-nn.AddLayer(new DenseLayer(10, new TanHActivationFunction()));
+var nn = NeuralNetwork.Load("MnistModel.json");
 
-nn.Train(2, trainInputs, trainTargets, 128, 1);
+//nn.Train(2, trainInputs, trainTargets, 32, 1);
 
 var accuracy = nn.Test(testingInputs, testTargets);
 
 Console.WriteLine("Model Accuracy: " + accuracy.ToString());
 
-nn.Save("MnistModel2.json");
+//nn.Save("Binarized MnistModel.json");
 
 //int inputSize = 20000;
 

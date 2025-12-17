@@ -16,6 +16,8 @@ namespace MyMachineLearningLibrary
 		public int NumberOfInputs { get; set; }
 		public ILossFunction LossFunction { get; set; }
 		public IWeightInitializtion WeightInitializtion { get; set; }
+		public bool OneHotEncoded { get; set; } = true;
+		public bool BinarizeInputs { get; set; } = false;
 		private NeuralNetwork()
 		{
 			Layers = new List<ILayer>();
@@ -72,7 +74,7 @@ namespace MyMachineLearningLibrary
 
 			foreach(var layer in Layers)
 			{
-				result = layer.FeedForward(result, false);
+				result = layer.FeedForward(result);
 			}
 
 			return result.Flatten();
@@ -84,7 +86,7 @@ namespace MyMachineLearningLibrary
 
 			foreach (var layer in Layers)
 			{
-				result = layer.FeedForward(result);
+				result = layer.TransposeInputsAndFeedForward(result);
 				result = result.Transpose();
 			}
 
@@ -94,6 +96,18 @@ namespace MyMachineLearningLibrary
 		private int[] MakeClassification(double[] predictions)
 		{
 			var result = new int[predictions.Length];
+
+			if(!OneHotEncoded)
+			{
+				var t = Layers.Last().ActivationFunction.MinClass == 0 ? .5 : 0;
+
+				for (int i = 0; i < result.Length; i++)
+				{
+					result[i] = predictions[i] >= t ? Layers.Last().ActivationFunction.MaxClass : Layers.Last().ActivationFunction.MinClass;
+				}
+
+				return result;
+			}
 
 			if (predictions.Length == 1)
 			{
@@ -162,9 +176,9 @@ namespace MyMachineLearningLibrary
 				double cost = 0; // The cost is the average of all the loss
 				double accuracy = 0;
 
-				foreach (var index in shuffledIndexes) 
+				foreach (var index in shuffledIndexes)
 				{
-					var outputsMatrix = Predict(trainInputsBatches[index]);
+					var outputsMatrix = Predict(BinarizeInputs ? trainInputsBatches[index].Binarize() : trainInputsBatches[index]);
 
 					// Calculate the errors
 					var targetsMatrix = trainTargetsBatches[index];

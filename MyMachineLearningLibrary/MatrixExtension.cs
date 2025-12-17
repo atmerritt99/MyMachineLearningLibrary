@@ -168,7 +168,20 @@ namespace MyMachineLearningLibrary
 			return result;
 		}
 
-        public MatrixExtension Add(MatrixExtension m)
+		public MatrixExtension Binarize()
+		{
+			var result = new MatrixExtension(RowLength, ColoumnLength);
+			for (int i = 0; i < RowLength; i++)
+			{
+				for (int j = 0; j < ColoumnLength; j++)
+				{
+					result[i, j] = Values[i][j] >= 0 ? 1 : -1;
+				}
+			}
+			return result;
+		}
+
+		public MatrixExtension Add(MatrixExtension m)
         {
 			var result = new MatrixExtension(RowLength, ColoumnLength);
 			for (int i = 0; i < RowLength; i++)

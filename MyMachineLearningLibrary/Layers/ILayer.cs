@@ -14,8 +14,8 @@ namespace MyMachineLearningLibrary.Layers
 		public MatrixExtension Outputs { get; set; }
 		public int NumberOfPerceptrons { get; set; }
 		public void InitializeLayer(int numberOfPerceptronsInPreviousLayer, int layerIndex);
+		public MatrixExtension TransposeInputsAndFeedForward(MatrixExtension layerInputs);
 		public MatrixExtension FeedForward(MatrixExtension layerInputs);
-		public MatrixExtension FeedForward(MatrixExtension layerInputs, bool x);
 		public MatrixExtension TransposeWeights();
 		public MatrixExtension Backpropagate(MatrixExtension errors, double learningRate, double decayRate, MatrixExtension previousLayerOutputs, int currentEpoch, IOptimizer optimizer);
 	}
